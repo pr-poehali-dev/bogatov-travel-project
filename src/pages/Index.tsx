@@ -60,9 +60,30 @@ const GALLERY = [
 ];
 
 const REVIEWS = [
-  { name: "Михаил Р.", role: "Корпоратив BMW", text: "Организовали тур для 12 человек. Всё чётко: техника, инструкторы, маршрут. Команда в восторге, будем повторять!", rating: 5 },
-  { name: "Анна К.", role: "Семейный тур", text: "Взяли детей 12 и 14 лет. Безопасно, весело, незабываемо. Инструктор терпеливый и профессиональный.", rating: 5 },
-  { name: "Денис В.", role: "Драйв-тур", text: "Три часа кайфа. Грязь, броды, адреналин. Фотки получились — огонь. Рекомендую всем, кто хочет настоящих эмоций.", rating: 5 },
+  {
+    name: "Анна",
+    role: "Семейный тур",
+    text: "Спасибо огромное за организацию такого чудесного мероприятия! Мой подарок сыновьям и внукам очень пришелся по душе! Насладились драйвом, заправились адреналином, запаслись фееричными эмоциями! Организация на высшем уровне! Все безопасно, экологично! Какие же вы молодцы, ребята! Мои все сказали: хотим еще!!!",
+    rating: 5,
+  },
+  {
+    name: "Евгения",
+    role: "Тур с детьми",
+    text: "Спасибо Вам огромное за прекрасно проведённое время, за положительные эмоции, адреналин 😁 Детям очень понравилось! Много эмоций!!! Если дети довольны, значит всё было на высшем уровне!!! Ещё раз СПАСИБО ОГРОМНОЕ!!! До новых встреч 😊",
+    rating: 5,
+  },
+  {
+    name: "Александр",
+    role: "Драйв-тур",
+    text: "Спасибо большое за фото, за непередаваемые эмоции. Заряжает на весь день. Всё очееень круто 😁 Было здорово поучаствовать в розыгрыше и получить сообщение, что выиграла. Вы крутые ребятки. Желаю успехов в этом деле)",
+    rating: 5,
+  },
+  {
+    name: "Анастасия",
+    role: "Первый раз на квадроциклах",
+    text: "Ещё раз, огромное спасибо, за покатушки 👍 Очень круто покатались 😁 Нас радужно встретили инструктора, к назначенному времени. Поехали в первые с дочерью. Инструктаж для новичков провели, одежду выдали. Получили ещё доп время для поездки 🥳, шикарные эмоции и впечатления. С радостью приедем ещё и будем советовать друзьям 👌 Попробовали и поняли что оно того стоит ❤️‍🔥",
+    rating: 5,
+  },
 ];
 
 function useInView(threshold = 0.1) {
@@ -168,6 +189,101 @@ function Calculator() {
             Забронировать тур
           </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ReviewCarousel({ gold }: { gold: string; goldText?: React.CSSProperties }) {
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState<"next" | "prev">("next");
+  const [animating, setAnimating] = useState(false);
+  const total = REVIEWS.length;
+
+  const go = (newIdx: number, direction: "next" | "prev") => {
+    if (animating) return;
+    setDir(direction);
+    setAnimating(true);
+    setTimeout(() => {
+      setActive(newIdx);
+      setAnimating(false);
+    }, 320);
+  };
+
+  const prev = () => go((active - 1 + total) % total, "prev");
+  const next = () => go((active + 1) % total, "next");
+
+  useEffect(() => {
+    if (animating) return;
+    const t = setInterval(() => {
+      go((active + 1) % total, "next");
+    }, 6000);
+    return () => clearInterval(t);
+  }, [active, animating]);
+
+  const r = REVIEWS[active];
+
+  return (
+    <div>
+      <div className="relative overflow-hidden rounded-2xl p-8 md:p-10" style={{ background: "linear-gradient(135deg,#0d0d0d,#0a0a0a)", border: "1px solid rgba(215,154,87,0.18)", minHeight: "280px" }}>
+        {/* accent line */}
+        <div className="absolute top-0 left-10 w-px h-10" style={{ background: "linear-gradient(to bottom, #d79a57, transparent)" }} />
+
+        <div className={`transition-all duration-300 ${animating
+          ? dir === "next" ? "opacity-0 translate-x-6" : "opacity-0 -translate-x-6"
+          : "opacity-100 translate-x-0"}`}>
+          <div className="flex gap-1 mb-6">
+            {[...Array(r.rating)].map((_, j) => (
+              <Icon key={j} name="Star" size={15} style={{ color: "#d79a57" } as React.CSSProperties} />
+            ))}
+          </div>
+
+          <p className="font-cormorant text-xl md:text-2xl text-white leading-relaxed mb-8 italic">
+            «{r.text}»
+          </p>
+
+          <div className="flex items-center gap-4 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center font-cormorant text-lg font-semibold flex-shrink-0"
+              style={{ background: "rgba(215,154,87,0.15)", color: "#d79a57" }}>
+              {r.name[0]}
+            </div>
+            <div>
+              <div className="font-montserrat text-sm text-white">{r.name}</div>
+              <div className="font-montserrat text-xs mt-0.5" style={{ color: "#666" }}>{r.role}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* controls */}
+      <div className="flex items-center justify-between mt-6">
+        <button onClick={prev}
+          className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300"
+          style={{ border: "1px solid rgba(215,154,87,0.25)", color: "#d79a57" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "rgba(215,154,87,0.08)")}
+          onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+          <Icon name="ChevronLeft" size={20} />
+        </button>
+
+        <div className="flex gap-2">
+          {REVIEWS.map((_, i) => (
+            <button key={i} onClick={() => go(i, i > active ? "next" : "prev")}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === active ? "28px" : "8px",
+                height: "8px",
+                background: i === active ? gold : "rgba(215,154,87,0.25)",
+              }} />
+          ))}
+        </div>
+
+        <button onClick={next}
+          className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300"
+          style={{ border: "1px solid rgba(215,154,87,0.25)", color: "#d79a57" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "rgba(215,154,87,0.08)")}
+          onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+          <Icon name="ChevronRight" size={20} />
+        </button>
       </div>
     </div>
   );
@@ -420,7 +536,7 @@ export default function Index() {
 
       {/* REVIEWS */}
       <section id="reviews" className="py-28 px-6">
-        <div ref={reviewsRef.ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+        <div ref={reviewsRef.ref} className={`max-w-4xl mx-auto transition-all duration-1000 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -431,21 +547,8 @@ export default function Index() {
               Говорят <span style={goldText}>клиенты</span>
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {REVIEWS.map((r, i) => (
-              <div key={i} className="rounded-2xl p-7" style={{ background: "linear-gradient(135deg,#0d0d0d,#0a0a0a)", border: "1px solid rgba(215,154,87,0.12)" }}>
-                <div className="absolute w-px h-8" style={{ background: "linear-gradient(to bottom, #d79a57, transparent)" }} />
-                <div className="flex gap-1 mb-5">
-                  {[...Array(r.rating)].map((_, j) => <Icon key={j} name="Star" size={13} style={{ color: "#d79a57" } as React.CSSProperties} />)}
-                </div>
-                <p className="font-cormorant text-lg text-white leading-relaxed mb-6 italic">«{r.text}»</p>
-                <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div className="font-montserrat text-sm text-white">{r.name}</div>
-                  <div className="font-montserrat text-xs mt-1" style={{ color: "#666" }}>{r.role}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+
+          <ReviewCarousel gold={gold} goldText={goldText} />
         </div>
       </section>
 
