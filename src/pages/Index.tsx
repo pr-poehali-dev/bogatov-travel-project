@@ -173,10 +173,20 @@ function Calculator() {
   );
 }
 
+const SEND_URL = "https://functions.poehali.dev/0cb2f075-e960-4742-a4b6-77150edc6ef8";
+const PHONE = "+7 (999) 104-66-66";
+const PHONE_RAW = "+79991046666";
+const WA_LINK = `https://wa.me/79991046666`;
+const TG_LINK = "https://t.me/BogatovTravel";
+const EMAIL = "dupz27@mail.ru";
+
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState("");
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -200,7 +210,7 @@ export default function Index() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md" : ""}`}
         style={{ background: scrolled ? "rgba(5,5,5,0.92)" : "transparent", borderBottom: scrolled ? "1px solid rgba(215,154,87,0.1)" : "none" }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="font-cormorant text-2xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</div>
+          <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-cormorant text-2xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</a>
           <div className="hidden md:flex items-center gap-7">
             {NAV_ITEMS.map(item => (
               <a key={item.href} href={item.href}
@@ -456,49 +466,89 @@ export default function Index() {
 
           <div className="grid md:grid-cols-2 gap-10">
             <div className="rounded-2xl p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(215,154,87,0.2)" }}>
-              <form onSubmit={e => e.preventDefault()} className="space-y-5">
-                {[
-                  { label: "Ваше имя", key: "name", type: "text", placeholder: "Михаил" },
-                  { label: "Телефон", key: "phone", type: "tel", placeholder: "+7 (___) ___-__-__" },
-                ].map(f => (
-                  <div key={f.key}>
-                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>{f.label}</label>
-                    <input type={f.type} placeholder={f.placeholder}
-                      value={form[f.key as keyof typeof form]}
-                      onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
-                      style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+              {sent ? (
+                <div className="flex flex-col items-center justify-center h-full py-10 text-center gap-5">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(215,154,87,0.15)" }}>
+                    <Icon name="CheckCircle" size={32} style={{ color: "#d79a57" } as React.CSSProperties} />
+                  </div>
+                  <div className="font-cormorant text-3xl text-white">Заявка отправлена!</div>
+                  <p className="font-montserrat text-sm" style={{ color: "#888" }}>Мы свяжемся с вами в ближайшее время</p>
+                  <button onClick={() => { setSent(false); setForm({ name: "", phone: "", message: "" }); }}
+                    className="font-montserrat text-xs uppercase tracking-widest px-6 py-2 rounded-full"
+                    style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
+                    Отправить ещё
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={async e => {
+                  e.preventDefault();
+                  setSending(true);
+                  setSendError("");
+                  try {
+                    const res = await fetch(SEND_URL, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(form),
+                    });
+                    const data = await res.json();
+                    if (data.ok) { setSent(true); }
+                    else { setSendError("Ошибка отправки. Позвоните нам напрямую."); }
+                  } catch {
+                    setSendError("Нет связи с сервером. Позвоните нам напрямую.");
+                  } finally {
+                    setSending(false);
+                  }
+                }} className="space-y-5">
+                  {[
+                    { label: "Ваше имя", key: "name", type: "text", placeholder: "Михаил" },
+                    { label: "Телефон", key: "phone", type: "tel", placeholder: "+7 (___) ___-__-__" },
+                  ].map(f => (
+                    <div key={f.key}>
+                      <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>{f.label}</label>
+                      <input type={f.type} placeholder={f.placeholder} required={f.key !== "message"}
+                        value={form[f.key as keyof typeof form]}
+                        onChange={e => setForm({ ...form, [f.key]: e.target.value })}
+                        className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
+                        style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+                        onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
+                        onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                    </div>
+                  ))}
+                  <div>
+                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Пожелания</label>
+                    <textarea placeholder="Формат, дата, количество человек..." rows={4}
+                      value={form.message}
+                      onChange={e => setForm({ ...form, message: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none resize-none transition-all"
+                      style={{ background: "#111", border: "1px solid #222" }}
                       onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
                       onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
                   </div>
-                ))}
-                <div>
-                  <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Пожелания</label>
-                  <textarea placeholder="Формат, дата, количество человек..." rows={4}
-                    value={form.message}
-                    onChange={e => setForm({ ...form, message: e.target.value })}
-                    className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none resize-none transition-all"
-                    style={{ background: "#111", border: "1px solid #222" }}
-                    onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
-                    onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
-                </div>
-                <button type="submit" className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest"
-                  style={{ background: gold, color: "#160f07" }}>
-                  Отправить заявку
-                </button>
-              </form>
+                  {sendError && (
+                    <div className="font-montserrat text-xs py-2 px-3 rounded-lg" style={{ color: "#e07070", background: "rgba(220,80,80,0.08)", border: "1px solid rgba(220,80,80,0.2)" }}>
+                      {sendError}
+                    </div>
+                  )}
+                  <button type="submit" disabled={sending}
+                    className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
+                    style={{ background: sending ? "rgba(215,154,87,0.5)" : gold, color: "#160f07", cursor: sending ? "wait" : "pointer" }}>
+                    {sending ? "Отправляем..." : "Отправить заявку"}
+                  </button>
+                </form>
+              )}
             </div>
 
             <div className="space-y-4 pt-2">
               {[
-                { icon: "Phone", label: "Телефон", value: "+7 (999) 000-00-00" },
-                { icon: "MessageCircle", label: "WhatsApp / Telegram", value: "@bogatovtravel" },
-                { icon: "Mail", label: "Email", value: "info@bogatovtravel.ru" },
-                { icon: "Clock", label: "Режим работы", value: "Ежедневно 9:00–20:00" },
+                { icon: "Phone", label: "Телефон", value: PHONE, href: `tel:${PHONE_RAW}` },
+                { icon: "MessageCircle", label: "WhatsApp", value: PHONE, href: WA_LINK },
+                { icon: "Send", label: "Telegram канал", value: "@BogatovTravel", href: TG_LINK },
+                { icon: "Mail", label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
               ].map((c, i) => (
-                <div key={i} className="flex items-start gap-4 p-5 rounded-xl transition-all duration-300"
-                  style={{ border: "1px solid rgba(215,154,87,0.1)", background: "rgba(255,255,255,0.02)" }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.25)")}
+                <a key={i} href={c.href} target={i > 0 ? "_blank" : undefined} rel="noopener noreferrer"
+                  className="flex items-start gap-4 p-5 rounded-xl transition-all duration-300 block"
+                  style={{ border: "1px solid rgba(215,154,87,0.1)", background: "rgba(255,255,255,0.02)", textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.3)")}
                   onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.1)")}>
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(215,154,87,0.1)" }}>
                     <Icon name={c.icon} size={18} style={{ color: "#d79a57" } as React.CSSProperties} />
@@ -507,18 +557,18 @@ export default function Index() {
                     <div className="font-montserrat text-xs uppercase tracking-widest mb-1" style={{ color: "#666" }}>{c.label}</div>
                     <div className="font-montserrat text-sm text-white">{c.value}</div>
                   </div>
-                </div>
+                </a>
               ))}
 
               <div className="flex gap-3 mt-2">
                 {[
-                  { label: "Позвонить", href: "tel:+79990000000" },
-                  { label: "WhatsApp", href: "https://wa.me/79990000000" },
-                  { label: "Telegram", href: "https://t.me/username" },
+                  { label: "Позвонить", href: `tel:${PHONE_RAW}`, primary: true },
+                  { label: "WhatsApp", href: WA_LINK, primary: false },
+                  { label: "Telegram", href: TG_LINK, primary: false },
                 ].map((b, i) => (
-                  <a key={i} href={b.href}
+                  <a key={i} href={b.href} target={i > 0 ? "_blank" : undefined} rel="noopener noreferrer"
                     className="flex-1 text-center py-2.5 rounded-full font-montserrat text-xs font-semibold uppercase tracking-wide transition-all duration-300"
-                    style={i === 0 ? { background: gold, color: "#160f07" } : { border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
+                    style={b.primary ? { background: gold, color: "#160f07" } : { border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
                     {b.label}
                   </a>
                 ))}
@@ -529,20 +579,24 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-8 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="font-cormorant text-xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</div>
-          <div className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#555" }}>© 2026 · Активные путешествия с характером</div>
-          <div className="flex gap-6">
-            {NAV_ITEMS.slice(0, 3).map(item => (
-              <a key={item.href} href={item.href} className="font-montserrat text-xs transition-colors"
-                style={{ color: "#666" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
-                onMouseLeave={e => (e.currentTarget.style.color = "#666")}>
-                {item.label}
-              </a>
-            ))}
+      <footer className="py-10 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-cormorant text-xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</a>
+          <div className="flex flex-wrap justify-center gap-5">
+            <a href={`tel:${PHONE_RAW}`} className="font-montserrat text-xs transition-colors" style={{ color: "#666" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#666")}>{PHONE}</a>
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="font-montserrat text-xs transition-colors" style={{ color: "#666" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#666")}>WhatsApp</a>
+            <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-montserrat text-xs transition-colors" style={{ color: "#666" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#666")}>Telegram</a>
+            <a href={`mailto:${EMAIL}`} className="font-montserrat text-xs transition-colors" style={{ color: "#666" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#666")}>{EMAIL}</a>
           </div>
+          <div className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#444" }}>© 2026 BOGATOV TRAVEL</div>
         </div>
       </footer>
     </div>
