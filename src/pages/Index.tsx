@@ -132,93 +132,124 @@ function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
+const PRICE_OPTIONS = [
+  { id: "t5",  label: "Первый шаг",    duration: "5 мин",  basePrice: 600,   passengerPrice: 0 },
+  { id: "t10", label: "Разгон",        duration: "10 мин", basePrice: 1500,  passengerPrice: 500 },
+  { id: "t20", label: "Вольный ветер", duration: "20 мин", basePrice: 2500,  passengerPrice: 1000 },
+  { id: "t40", label: "Лесной дозор",  duration: "40 мин", basePrice: 4500,  passengerPrice: 1000 },
+  { id: "t60", label: "Дикая трасса",  duration: "60 мин", basePrice: 6000,  passengerPrice: 1500 },
+  { id: "ind", label: "Свободный маршрут", duration: "1.5–2 ч", basePrice: 10000, passengerPrice: 3500 },
+];
+
 function Calculator() {
-  const [people, setPeople] = useState(2);
-  const [hours, setHours] = useState(2);
-  const [extra, setExtra] = useState<string[]>([]);
+  const [tourId, setTourId] = useState("t40");
+  const [quads, setQuads] = useState(1);
+  const [passengers, setPassengers] = useState(0);
   const [animating, setAnimating] = useState(false);
 
-  const extras = [
-    { id: "photo", label: "Фотосъёмка", price: 1500 },
-    { id: "video", label: "Видеосъёмка", price: 2500 },
-    { id: "transfer", label: "Трансфер", price: 1000 },
-    { id: "food", label: "Перекус", price: 800 },
-  ];
-
-  const basePerPerson = 2000;
-  const hourMult = hours <= 1 ? 1 : hours <= 3 ? 1.8 : 2.8;
-  const extrasTotal = extras.filter(e => extra.includes(e.id)).reduce((s, e) => s + e.price, 0);
-  const total = Math.round(people * basePerPerson * hourMult) + extrasTotal;
+  const tour = PRICE_OPTIONS.find(t => t.id === tourId)!;
+  const total = tour.basePrice * quads + tour.passengerPrice * passengers;
 
   useEffect(() => {
     setAnimating(true);
     const t = setTimeout(() => setAnimating(false), 250);
     return () => clearTimeout(t);
-  }, [people, hours, extra]);
+  }, [tourId, quads, passengers]);
 
-  const toggleExtra = (id: string) => {
-    setExtra(prev => prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]);
-  };
+  // сбрасываем пассажиров если тариф без пассажира
+  useEffect(() => {
+    if (tour.passengerPrice === 0) setPassengers(0);
+  }, [tourId]);
 
   return (
     <div className="rounded-2xl p-8 md:p-10" style={{ background: "linear-gradient(135deg, #111 0%, #0d0d0d 100%)", border: "1px solid rgba(215,154,87,0.2)" }}>
       <div className="grid md:grid-cols-2 gap-10">
         <div className="space-y-7">
-          <div>
-            <div className="flex justify-between mb-3">
-              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.8)" }}>Количество человек</span>
-              <span className="font-cormorant text-2xl text-white">{people}</span>
-            </div>
-            <input type="range" min={1} max={20} step={1} value={people}
-              onChange={e => setPeople(+e.target.value)}
-              className="w-full h-0.5 bg-[#333] rounded appearance-none cursor-pointer"
-              style={{ accentColor: "#d79a57" }} />
-            <div className="flex justify-between text-xs mt-1 font-montserrat" style={{ color: "#666" }}>
-              <span>1 чел.</span><span>20 чел.</span>
-            </div>
-          </div>
 
+          {/* Выбор тура */}
           <div>
-            <div className="flex justify-between mb-3">
-              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.8)" }}>Длительность</span>
-              <span className="font-cormorant text-2xl text-white">{hours} {hours === 1 ? "час" : hours < 5 ? "часа" : "часов"}</span>
-            </div>
-            <input type="range" min={1} max={8} step={1} value={hours}
-              onChange={e => setHours(+e.target.value)}
-              className="w-full h-0.5 bg-[#333] rounded appearance-none cursor-pointer"
-              style={{ accentColor: "#d79a57" }} />
-            <div className="flex justify-between text-xs mt-1 font-montserrat" style={{ color: "#666" }}>
-              <span>1 час</span><span>8 часов</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="font-montserrat text-xs uppercase tracking-widest mb-3" style={{ color: "rgba(215,154,87,0.8)" }}>Дополнительно</div>
-            <div className="grid grid-cols-2 gap-2">
-              {extras.map(e => (
-                <button key={e.id} onClick={() => toggleExtra(e.id)}
-                  className="py-2 px-3 rounded-lg border text-xs font-montserrat transition-all duration-300 text-left"
+            <div className="font-montserrat text-xs uppercase tracking-widest mb-3" style={{ color: "rgba(215,154,87,0.8)" }}>Формат тура</div>
+            <div className="space-y-2">
+              {PRICE_OPTIONS.map(opt => (
+                <button key={opt.id} onClick={() => setTourId(opt.id)}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl border font-montserrat text-sm transition-all duration-200"
                   style={{
-                    borderColor: extra.includes(e.id) ? "#d79a57" : "#2a2a2a",
-                    background: extra.includes(e.id) ? "rgba(215,154,87,0.1)" : "transparent",
-                    color: extra.includes(e.id) ? "#d79a57" : "#666"
+                    borderColor: tourId === opt.id ? "#d79a57" : "#252525",
+                    background: tourId === opt.id ? "rgba(215,154,87,0.08)" : "transparent",
+                    color: tourId === opt.id ? "#f1c98a" : "#777",
                   }}>
-                  {e.label}
-                  <span className="block text-xs opacity-70">+{e.price.toLocaleString("ru-RU")} ₽</span>
+                  <span className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full flex-shrink-0 transition-all"
+                      style={{ background: tourId === opt.id ? "#d79a57" : "#333" }} />
+                    <span>{opt.label}</span>
+                    <span className="text-xs opacity-60">{opt.duration}</span>
+                  </span>
+                  <span className="font-cormorant text-lg" style={{ color: tourId === opt.id ? "#d79a57" : "#555" }}>
+                    {opt.basePrice.toLocaleString("ru-RU")} ₽
+                  </span>
                 </button>
               ))}
             </div>
           </div>
+
+          {/* Количество квадроциклов */}
+          <div>
+            <div className="flex justify-between mb-3">
+              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.8)" }}>Квадроциклов</span>
+              <span className="font-cormorant text-2xl text-white">{quads}</span>
+            </div>
+            <input type="range" min={1} max={10} step={1} value={quads}
+              onChange={e => setQuads(+e.target.value)}
+              className="w-full h-0.5 bg-[#333] rounded appearance-none cursor-pointer"
+              style={{ accentColor: "#d79a57" }} />
+            <div className="flex justify-between text-xs mt-1 font-montserrat" style={{ color: "#555" }}>
+              <span>1</span><span>10</span>
+            </div>
+          </div>
+
+          {/* Пассажиры */}
+          {tour.passengerPrice > 0 && (
+            <div>
+              <div className="flex justify-between mb-3">
+                <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.8)" }}>
+                  Пассажиров <span style={{ color: "#555" }}>+{tour.passengerPrice.toLocaleString("ru-RU")} ₽/чел.</span>
+                </span>
+                <span className="font-cormorant text-2xl text-white">{passengers}</span>
+              </div>
+              <input type="range" min={0} max={quads} step={1} value={passengers}
+                onChange={e => setPassengers(+e.target.value)}
+                className="w-full h-0.5 bg-[#333] rounded appearance-none cursor-pointer"
+                style={{ accentColor: "#d79a57" }} />
+              <div className="flex justify-between text-xs mt-1 font-montserrat" style={{ color: "#555" }}>
+                <span>0</span><span>{quads}</span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col justify-center items-center text-center" style={{ borderLeft: "1px solid rgba(215,154,87,0.15)", paddingLeft: "2.5rem" }}>
-          <div className="font-montserrat text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(215,154,87,0.6)" }}>Стоимость тура</div>
+          <div className="font-montserrat text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(215,154,87,0.6)" }}>Итого</div>
+
           <div className={`font-cormorant text-5xl md:text-6xl text-white transition-all duration-250 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}>
             {total.toLocaleString("ru-RU")} ₽
           </div>
-          <div className="font-montserrat text-xs mt-3 mb-8" style={{ color: "#555" }}>
-            Предварительный расчёт · Точная цена на консультации
+
+          <div className="mt-4 mb-6 text-left w-full space-y-1">
+            <div className="flex justify-between font-montserrat text-xs" style={{ color: "#666" }}>
+              <span>{tour.label} × {quads}</span>
+              <span>{(tour.basePrice * quads).toLocaleString("ru-RU")} ₽</span>
+            </div>
+            {passengers > 0 && (
+              <div className="flex justify-between font-montserrat text-xs" style={{ color: "#666" }}>
+                <span>Пассажиры × {passengers}</span>
+                <span>{(tour.passengerPrice * passengers).toLocaleString("ru-RU")} ₽</span>
+              </div>
+            )}
+            <div className="pt-2 flex justify-between font-montserrat text-xs border-t" style={{ borderColor: "rgba(255,255,255,0.06)", color: "#999" }}>
+              <span>Предварительный расчёт</span>
+            </div>
           </div>
+
           <a href="#booking" className="block w-full text-center py-3 px-8 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
             style={{ background: "linear-gradient(135deg, #d79a57, #f0b36d)", color: "#160f07" }}>
             Забронировать тур
