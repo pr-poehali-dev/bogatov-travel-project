@@ -23,32 +23,67 @@ const BENEFITS = [
   { icon: "Star", title: "Премиум сервис", text: "Трансфер, питание, комфортная организация — всё продумано до мелочей." },
 ];
 
-const TOURS = [
+const TOURS_STANDARD = [
   {
-    name: "Мини-приключение",
-    duration: "1 час",
-    audience: "Новички, семьи",
-    price: "от 2 500 ₽",
-    includes: ["Инструктаж по управлению", "Экипировка (шлем, перчатки)", "Сопровождение инструктора", "Маршрут по лесной тропе"],
+    name: "Первый шаг",
+    sub: "Пробный заезд",
+    duration: "5 минут",
+    price: "600 ₽",
+    passenger: null,
     badge: "",
+    desc: "Почувствуй управление квадроциклом — идеально для тех, кто пробует впервые.",
   },
   {
-    name: "Драйв-тур",
-    duration: "2–3 часа",
-    audience: "Друзья, пары",
-    price: "от 5 500 ₽",
-    includes: ["Полный маршрут по бездорожью", "Остановки с видовыми точками", "Фото-сессия на маршруте", "Снаряжение и инструктаж"],
+    name: "Разгон",
+    sub: "Прокат",
+    duration: "10 минут",
+    price: "1 500 ₽",
+    passenger: "+ пассажир 500 ₽",
+    badge: "",
+    desc: "Короткая, но насыщенная поездка. Успеешь почувствовать настоящий драйв.",
+  },
+  {
+    name: "Вольный ветер",
+    sub: "Прокат",
+    duration: "20 минут",
+    price: "2 500 ₽",
+    passenger: "+ пассажир 1 000 ₽",
+    badge: "",
+    desc: "Отличный вариант для прогулки в паре — время есть, маршрут интересный.",
+  },
+  {
+    name: "Лесной дозор",
+    sub: "Мини-тур",
+    duration: "40 минут",
+    price: "4 500 ₽",
+    passenger: "+ пассажир 1 000 ₽",
     badge: "Хит",
+    desc: "Полноценный заезд с маршрутом по лесным тропам. Любимый формат новичков.",
   },
   {
-    name: "Премиум-поездка",
-    duration: "4+ часа",
-    audience: "Компании, VIP",
-    price: "от 9 000 ₽",
-    includes: ["Индивидуальный маршрут", "Видеосъёмка всего маршрута", "Трансфер до места", "Питание и горячий чай"],
-    badge: "VIP",
+    name: "Дикая трасса",
+    sub: "Тур",
+    duration: "60 минут",
+    price: "6 000 ₽",
+    passenger: "+ пассажир 1 500 ₽",
+    badge: "Топ",
+    desc: "Час настоящего бездорожья. Грязь, адреналин, незабываемые эмоции — всё включено.",
   },
 ];
+
+const TOUR_PREMIUM = {
+  name: "Свободный маршрут",
+  sub: "Индивидуальная прогулка",
+  duration: "1.5 — 2 часа",
+  price: "10 000 ₽",
+  passenger: "+ пассажир 3 500 ₽",
+  includes: [
+    "Гибкий маршрут под ваши желания",
+    "Фото и видеоролик в подарок",
+    "Сопровождение опытного гида",
+    "Только вы и природа",
+  ],
+};
 
 const GALLERY = [
   { img: IMG_ACTION, label: "Экстремальное бездорожье" },
@@ -444,46 +479,116 @@ export default function Index() {
 
       {/* TOURS */}
       <section id="tours" className="py-28 px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
-        <div ref={toursRef.ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${toursRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+        <div ref={toursRef.ref} className={`max-w-5xl mx-auto transition-all duration-1000 ${toursRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
-              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Форматы</span>
+              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Прайс</span>
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
             </div>
             <h2 className="font-cormorant text-white" style={{ fontSize: "clamp(32px,5vw,54px)" }}>
-              Выберите <span style={goldText}>свой тур</span>
+              Выберите <span style={goldText}>свой формат</span>
             </h2>
+            <p className="font-montserrat text-sm mt-3" style={{ color: "#777" }}>
+              Все маршруты в сопровождении опытного гида · С вас только деньги и тёплая одежда, хорошее настроение — с нас 😉
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {TOURS.map((tour, i) => (
-              <div key={i} className="relative rounded-2xl p-7 flex flex-col"
-                style={{ background: i === 1 ? "linear-gradient(135deg,rgba(215,154,87,0.08),rgba(215,154,87,0.02))" : "linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015))", border: i === 1 ? "1px solid rgba(215,154,87,0.4)" : "1px solid rgba(215,154,87,0.12)" }}>
+          {/* Стандартные форматы */}
+          <div className="space-y-3 mb-10">
+            {TOURS_STANDARD.map((tour, i) => (
+              <div key={i} className="relative flex items-center justify-between gap-4 rounded-2xl px-6 py-5 transition-all duration-300 group"
+                style={{
+                  background: tour.badge ? "linear-gradient(135deg,rgba(215,154,87,0.08),rgba(215,154,87,0.03))" : "rgba(255,255,255,0.025)",
+                  border: tour.badge ? "1px solid rgba(215,154,87,0.35)" : "1px solid rgba(215,154,87,0.1)",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)")}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = tour.badge ? "rgba(215,154,87,0.35)" : "rgba(215,154,87,0.1)")}>
+
                 {tour.badge && (
-                  <div className="absolute top-5 right-5 px-3 py-1 rounded-full font-montserrat text-xs font-semibold"
+                  <div className="absolute -top-2.5 left-6 px-2.5 py-0.5 rounded-full font-montserrat text-xs font-semibold"
                     style={{ background: gold, color: "#160f07" }}>
                     {tour.badge}
                   </div>
                 )}
-                <div className="font-montserrat text-xs uppercase tracking-widest mb-3" style={{ color: "rgba(215,154,87,0.6)" }}>{tour.audience}</div>
-                <h3 className="font-cormorant text-3xl text-white mb-1">{tour.name}</h3>
-                <div className="font-montserrat text-sm mb-4" style={{ color: "#888" }}>{tour.duration}</div>
-                <ul className="space-y-2 mb-6 flex-1">
-                  {tour.includes.map((inc, j) => (
-                    <li key={j} className="flex items-start gap-2 font-montserrat text-sm" style={{ color: "#ded4c2" }}>
-                      <span className="mt-0.5 flex-shrink-0" style={{ color: "#d79a57" }}>✓</span>
-                      {inc}
-                    </li>
-                  ))}
-                </ul>
-                <div className="font-cormorant text-3xl text-white mb-4">{tour.price}</div>
-                <a href="#booking" className="block text-center py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
-                  style={i === 1 ? { background: gold, color: "#160f07" } : { border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
-                  Забронировать
+
+                <div className="flex items-center gap-5 flex-1 min-w-0">
+                  <div className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center font-cormorant text-xl font-bold"
+                    style={{ background: "rgba(215,154,87,0.1)", color: "#d79a57" }}>
+                    {i + 1}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-cormorant text-xl text-white leading-tight">{tour.name}</div>
+                    <div className="font-montserrat text-xs mt-0.5" style={{ color: "#888" }}>{tour.sub} · {tour.duration}</div>
+                    <div className="font-montserrat text-xs mt-1 hidden md:block" style={{ color: "#666" }}>{tour.desc}</div>
+                  </div>
+                </div>
+
+                <div className="text-right flex-shrink-0">
+                  <div className="font-cormorant text-2xl text-white whitespace-nowrap">{tour.price}</div>
+                  {tour.passenger && (
+                    <div className="font-montserrat text-xs mt-0.5 whitespace-nowrap" style={{ color: "#d79a57" }}>{tour.passenger}</div>
+                  )}
+                </div>
+
+                <a href="#booking"
+                  className="hidden md:flex flex-shrink-0 items-center gap-1 px-5 py-2.5 rounded-full font-montserrat text-xs font-semibold uppercase tracking-wide transition-all duration-300"
+                  style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.1)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                  Записаться
                 </a>
               </div>
             ))}
+          </div>
+
+          {/* Индивидуальная прогулка */}
+          <div className="rounded-2xl p-7 md:p-10" style={{ background: "linear-gradient(135deg,rgba(215,154,87,0.1),rgba(215,154,87,0.03))", border: "2px solid rgba(215,154,87,0.4)" }}>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full font-montserrat text-xs font-semibold"
+                  style={{ background: gold, color: "#160f07" }}>
+                  Индивидуально · Фото и видео в подарок
+                </div>
+                <h3 className="font-cormorant text-4xl text-white mb-1">{TOUR_PREMIUM.name}</h3>
+                <div className="font-montserrat text-sm mb-4" style={{ color: "#888" }}>{TOUR_PREMIUM.sub} · {TOUR_PREMIUM.duration}</div>
+                <ul className="space-y-2">
+                  {TOUR_PREMIUM.includes.map((inc, j) => (
+                    <li key={j} className="flex items-center gap-2 font-montserrat text-sm" style={{ color: "#ded4c2" }}>
+                      <span style={{ color: "#d79a57" }}>✦</span> {inc}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col items-start md:items-end gap-4">
+                <div>
+                  <div className="font-cormorant text-5xl text-white">{TOUR_PREMIUM.price}</div>
+                  <div className="font-montserrat text-sm mt-1" style={{ color: "#d79a57" }}>{TOUR_PREMIUM.passenger}</div>
+                </div>
+                <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest"
+                  style={{ background: gold, color: "#160f07" }}>
+                  Забронировать
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Корпоративы */}
+          <div className="mt-5 rounded-2xl px-7 py-5 flex flex-col sm:flex-row items-center gap-4 justify-between"
+            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(215,154,87,0.12)" }}>
+            <div className="flex items-center gap-4">
+              <Icon name="Users" size={22} style={{ color: "#d79a57" } as React.CSSProperties} />
+              <div>
+                <div className="font-cormorant text-xl text-white">Корпоративы, дни рождения, тимбилдинги</div>
+                <div className="font-montserrat text-xs mt-0.5" style={{ color: "#777" }}>Семейные поездки и групповые заявки — принимаем с удовольствием 🥳</div>
+              </div>
+            </div>
+            <a href="#booking" className="flex-shrink-0 px-6 py-2.5 rounded-full font-montserrat text-xs font-semibold uppercase tracking-wide transition-all duration-300"
+              style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.08)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+              Оставить заявку
+            </a>
           </div>
         </div>
       </section>
