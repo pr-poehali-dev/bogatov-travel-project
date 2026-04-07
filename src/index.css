@@ -99,3 +99,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .gold-btn {
+    @apply inline-block px-8 py-3 font-montserrat text-xs uppercase tracking-widest rounded transition-all duration-300;
+    background: linear-gradient(135deg, #c9a84c 0%, #f0d080 50%, #c9a84c 100%);
+    color: #080808;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
+  .gold-btn:hover {
+    background: linear-gradient(135deg, #f0d080 0%, #c9a84c 50%, #f0d080 100%);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .font-cormorant {
+    font-family: "Cormorant", serif;
+  }
+
+  .font-montserrat {
+    font-family: "Montserrat", sans-serif;
+  }
+}
