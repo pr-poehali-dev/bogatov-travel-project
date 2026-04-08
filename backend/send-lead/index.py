@@ -1,10 +1,10 @@
 """
-Отправка заявки с сайта BOGATOV TRAVEL в Telegram и на email.
+Приём заявки с сайта BOGATOV TRAVEL: сохранение в БД и отправка в Telegram.
 """
 import os
 import json
 import urllib.request
-import urllib.parse
+import psycopg2
 
 
 def handler(event: dict, context) -> dict:
@@ -23,21 +23,44 @@ def handler(event: dict, context) -> dict:
     except Exception:
         return {"statusCode": 400, "headers": headers, "body": json.dumps({"ok": False, "error": "Invalid JSON"})}
 
-    name = body.get("name", "").strip()
-    phone = body.get("phone", "").strip()
+    name    = body.get("name", "").strip()
+    phone   = body.get("phone", "").strip()
+    email   = body.get("email", "").strip()
+    tour    = body.get("tour", "").strip()
     message = body.get("message", "").strip()
 
     if not name or not phone:
         return {"statusCode": 400, "headers": headers, "body": json.dumps({"ok": False, "error": "Имя и телефон обязательны"})}
 
-    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    schema = os.environ.get("MAIN_DB_SCHEMA", "public")
 
-    text = (
-        "🏍 *Новая заявка с сайта BOGATOV TRAVEL*\n\n"
-        f"👤 *Имя:* {name}\n"
-        f"📞 *Телефон:* {phone}\n"
-    )
+    # Сохраняем в БД
+    db_ok = False
+    try:
+        conn = psycopg2.connect(os.environ["DATABASE_URL"])
+        cur = conn.cursor()
+        cur.execute(
+            f"INSERT INTO {schema}.leads (name, phone, email, tour, message) VALUES (%s, %s, %s, %s, %s)",
+            (name, phone, email or None, tour or None, message or None)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+        db_ok = True
+    except Exception:
+        db_ok = False
+
+    # Отправляем в Telegram
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+    chat_id   = os.environ.get("TELEGRAM_CHAT_ID", "")
+
+    text = "🏍 *Новая заявка — BOGATOV TRAVEL*\n\n"
+    text += f"👤 *Имя:* {name}\n"
+    text += f"📞 *Телефон:* {phone}\n"
+    if email:
+        text += f"📧 *Email:* {email}\n"
+    if tour:
+        text += f"🎯 *Формат:* {tour}\n"
     if message:
         text += f"💬 *Пожелания:* {message}\n"
 
@@ -58,11 +81,11 @@ def handler(event: dict, context) -> dict:
             with urllib.request.urlopen(tg_req, timeout=10) as resp:
                 tg_result = json.loads(resp.read())
                 tg_ok = tg_result.get("ok", False)
-        except Exception as e:
+        except Exception:
             tg_ok = False
 
     return {
         "statusCode": 200,
         "headers": headers,
-        "body": json.dumps({"ok": True, "telegram": tg_ok}),
+        "body": json.dumps({"ok": True, "db": db_ok, "telegram": tg_ok}),
     }

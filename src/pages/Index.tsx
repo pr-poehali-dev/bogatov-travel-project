@@ -365,7 +365,7 @@ const EMAIL = "dupz27@mail.ru";
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", tour: "", message: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [sendError, setSendError] = useState("");
@@ -712,7 +712,7 @@ export default function Index() {
                   </div>
                   <div className="font-cormorant text-3xl text-white">Заявка отправлена!</div>
                   <p className="font-montserrat text-sm" style={{ color: "#888" }}>Мы свяжемся с вами в ближайшее время</p>
-                  <button onClick={() => { setSent(false); setForm({ name: "", phone: "", message: "" }); }}
+                  <button onClick={() => { setSent(false); setForm({ name: "", phone: "", email: "", tour: "", message: "" }); }}
                     className="font-montserrat text-xs uppercase tracking-widest px-6 py-2 rounded-full"
                     style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
                     Отправить ещё
@@ -737,32 +737,85 @@ export default function Index() {
                   } finally {
                     setSending(false);
                   }
-                }} className="space-y-5">
-                  {[
-                    { label: "Ваше имя", key: "name", type: "text", placeholder: "Михаил" },
-                    { label: "Телефон", key: "phone", type: "tel", placeholder: "+7 (___) ___-__-__" },
-                  ].map(f => (
-                    <div key={f.key}>
-                      <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>{f.label}</label>
-                      <input type={f.type} placeholder={f.placeholder} required={f.key !== "message"}
-                        value={form[f.key as keyof typeof form]}
-                        onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                        className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
-                        style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+                }} className="space-y-4">
+
+                  {/* Имя */}
+                  <div>
+                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Ваше имя *</label>
+                    <input type="text" placeholder="Михаил" required
+                      value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
+                      style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                  </div>
+
+                  {/* Телефон */}
+                  <div>
+                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Телефон *</label>
+                    <input type="tel" placeholder="+7 (___) ___-__-__" required
+                      value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
+                      style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Электронная почта</label>
+                    <input type="email" placeholder="your@email.com"
+                      value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none transition-all"
+                      style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
+                      onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                  </div>
+
+                  {/* Формат тура */}
+                  <div>
+                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Формат тура</label>
+                    <div className="relative">
+                      <select value={form.tour} onChange={e => setForm({ ...form, tour: e.target.value })}
+                        className="w-full rounded-xl px-4 py-3 font-montserrat text-sm focus:outline-none transition-all appearance-none cursor-pointer"
+                        style={{ background: "#111", border: "1px solid #222", color: form.tour ? "#fff" : "#555" }}
                         onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
-                        onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                        onBlur={e => (e.currentTarget.style.borderColor = "#222")}>
+                        <option value="" style={{ color: "#555" }}>Выберите формат...</option>
+                        <optgroup label="Стандартные туры" style={{ color: "#888" }}>
+                          <option value="Первый шаг — 5 мин (600 ₽)">Первый шаг — 5 мин · 600 ₽</option>
+                          <option value="Разгон — 10 мин (1 500 ₽)">Разгон — 10 мин · 1 500 ₽</option>
+                          <option value="Вольный ветер — 20 мин (2 500 ₽)">Вольный ветер — 20 мин · 2 500 ₽</option>
+                          <option value="Лесной дозор — 40 мин (4 500 ₽)">Лесной дозор — 40 мин · 4 500 ₽</option>
+                          <option value="Дикая трасса — 60 мин (6 000 ₽)">Дикая трасса — 60 мин · 6 000 ₽</option>
+                        </optgroup>
+                        <optgroup label="Индивидуально" style={{ color: "#888" }}>
+                          <option value="Свободный маршрут — 1.5–2 ч (10 000 ₽)">Свободный маршрут — 1.5–2 ч · 10 000 ₽</option>
+                        </optgroup>
+                        <optgroup label="Мероприятия" style={{ color: "#888" }}>
+                          <option value="Корпоратив">Корпоратив</option>
+                          <option value="День рождения">День рождения 🥳</option>
+                          <option value="Тимбилдинг">Тимбилдинг</option>
+                          <option value="Семейная поездка">Семейная поездка</option>
+                        </optgroup>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "#d79a57" }}>
+                        <Icon name="ChevronDown" size={16} />
+                      </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Пожелания */}
                   <div>
                     <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Пожелания</label>
-                    <textarea placeholder="Формат, дата, количество человек..." rows={4}
-                      value={form.message}
-                      onChange={e => setForm({ ...form, message: e.target.value })}
+                    <textarea placeholder="Дата, количество человек, вопросы..." rows={3}
+                      value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
                       className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none resize-none transition-all"
                       style={{ background: "#111", border: "1px solid #222" }}
                       onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
                       onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
                   </div>
+
                   {sendError && (
                     <div className="font-montserrat text-xs py-2 px-3 rounded-lg" style={{ color: "#e07070", background: "rgba(220,80,80,0.08)", border: "1px solid rgba(220,80,80,0.2)" }}>
                       {sendError}

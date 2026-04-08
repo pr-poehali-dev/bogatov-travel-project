@@ -7,10 +7,10 @@
       "expectedStatus": 200
     },
     {
-      "name": "Успешная отправка заявки",
+      "name": "Успешная заявка со всеми полями",
       "method": "POST",
       "path": "/",
-      "body": {"name": "Михаил", "phone": "+79991046666", "message": "Интересует драйв-тур на 3 человека"},
+      "body": {"name": "Михаил", "phone": "+79991046666", "email": "test@example.com", "tour": "Лесной дозор — 40 мин", "message": "Хочу записаться"},
       "expectedStatus": 200,
       "expectedBody": {"ok": true},
       "bodyMatcher": "partial"
