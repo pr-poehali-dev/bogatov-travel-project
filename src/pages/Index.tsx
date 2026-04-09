@@ -764,72 +764,79 @@ export default function Index() {
                     strokeWidth="0.5"
                   />
 
-                  {/* НАХОДКА — открыта ✓ */}
-                  <g className="cursor-pointer" style={{ filter: "url(#glow)" }}>
-                    <circle cx="260" cy="380" r="12" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
-                      <animate attributeName="r" values="12;16;12" dur="2s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="260" cy="380" r="5" fill="#d79a57" />
-                    <text x="275" y="375" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Находка ✓</text>
-                    <text x="275" y="387" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
+                  {/* УССУРИЙСК — 2027 (север, левее центра) */}
+                  <g className="cursor-pointer">
+                    <line x1="175" y1="230" x2="118" y2="218" stroke="rgba(180,120,255,0.35)" strokeWidth="0.8" />
+                    <circle cx="175" cy="230" r="8" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="175" cy="230" r="3.5" fill="rgba(180,120,255,0.6)" />
+                    <text x="60" y="213" fontSize="10" fill="rgba(200,160,255,0.9)" fontFamily="sans-serif" fontWeight="600">Уссурийск</text>
+                    <text x="60" y="224" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2027</text>
                   </g>
 
-                  {/* ВОЛЧАНЕЦ — открыт ✓ */}
+                  {/* ВОЛЧАНЕЦ — открыт ✓ (восток, выше Находки) */}
                   <g className="cursor-pointer" style={{ filter: "url(#glow)" }}>
-                    <circle cx="230" cy="345" r="12" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
-                      <animate attributeName="r" values="12;16;12" dur="2.3s" repeatCount="indefinite" />
+                    <line x1="290" y1="310" x2="330" y2="295" stroke="rgba(215,154,87,0.4)" strokeWidth="0.8" />
+                    <circle cx="290" cy="310" r="11" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
+                      <animate attributeName="r" values="11;15;11" dur="2.3s" repeatCount="indefinite" />
                       <animate attributeName="opacity" values="1;0.6;1" dur="2.3s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="230" cy="345" r="5" fill="#d79a57" />
-                    <text x="115" y="340" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Волчанец ✓</text>
-                    <text x="115" y="352" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
+                    <circle cx="290" cy="310" r="5" fill="#d79a57" />
+                    <text x="332" y="292" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Волчанец ✓</text>
+                    <text x="332" y="304" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
                   </g>
 
-                  {/* ВЛАДИВОСТОК — 2024 */}
+                  {/* БОЛЬШОЙ КАМЕНЬ — 2027 (юго-восток, правее) */}
                   <g className="cursor-pointer">
-                    <circle cx="195" cy="430" r="9" fill="rgba(100,160,255,0.1)" stroke="rgba(100,160,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
-                    <circle cx="195" cy="430" r="4" fill="rgba(100,160,255,0.6)" />
-                    <text x="130" y="415" fontSize="10" fill="rgba(150,200,255,0.8)" fontFamily="sans-serif">Владивосток</text>
-                    <text x="130" y="426" fontSize="8" fill="rgba(150,200,255,0.5)" fontFamily="sans-serif">2024 → план</text>
+                    <line x1="298" y1="365" x2="338" y2="355" stroke="rgba(180,120,255,0.35)" strokeWidth="0.8" />
+                    <circle cx="298" cy="365" r="8" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="298" cy="365" r="3.5" fill="rgba(180,120,255,0.6)" />
+                    <text x="340" y="352" fontSize="10" fill="rgba(200,160,255,0.9)" fontFamily="sans-serif" fontWeight="600">Б. Камень</text>
+                    <text x="340" y="363" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2027</text>
                   </g>
 
-                  {/* УССУРИЙСК — 2025 */}
-                  <g className="cursor-pointer">
-                    <circle cx="190" cy="305" r="9" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
-                    <circle cx="190" cy="305" r="4" fill="rgba(180,120,255,0.5)" />
-                    <text x="200" y="300" fontSize="10" fill="rgba(200,160,255,0.8)" fontFamily="sans-serif">Уссурийск</text>
-                    <text x="200" y="311" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2025</text>
+                  {/* НАХОДКА — открыта ✓ (восток, правый берег) */}
+                  <g className="cursor-pointer" style={{ filter: "url(#glow)" }}>
+                    <line x1="278" y1="400" x2="320" y2="393" stroke="rgba(215,154,87,0.4)" strokeWidth="0.8" />
+                    <circle cx="278" cy="400" r="11" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
+                      <animate attributeName="r" values="11;15;11" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="278" cy="400" r="5" fill="#d79a57" />
+                    <text x="322" y="390" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Находка ✓</text>
+                    <text x="322" y="402" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
                   </g>
 
-                  {/* БОЛЬШОЙ КАМЕНЬ — 2025 */}
+                  {/* ВРАНГЕЛЬ — 2028 (правее Находки, выше) */}
                   <g className="cursor-pointer">
-                    <circle cx="290" cy="360" r="9" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
-                    <circle cx="290" cy="360" r="4" fill="rgba(180,120,255,0.5)" />
-                    <text x="295" y="355" fontSize="9" fill="rgba(200,160,255,0.8)" fontFamily="sans-serif">Б. Камень</text>
-                    <text x="295" y="366" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2025</text>
+                    <line x1="308" y1="428" x2="340" y2="440" stroke="rgba(255,80,80,0.35)" strokeWidth="0.8" />
+                    <circle cx="308" cy="428" r="8" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.4)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="308" cy="428" r="3.5" fill="rgba(255,80,80,0.5)" />
+                    <text x="330" y="437" fontSize="10" fill="rgba(255,140,140,0.9)" fontFamily="sans-serif" fontWeight="600">Врангель</text>
+                    <text x="330" y="448" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2028</text>
                   </g>
 
-                  {/* ФОКИНО — 2026 */}
+                  {/* ФОКИНО — 2028 (юг, левее центра) */}
                   <g className="cursor-pointer">
-                    <circle cx="270" cy="415" r="9" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />
-                    <circle cx="270" cy="415" r="4" fill="rgba(255,80,80,0.4)" />
-                    <text x="278" y="410" fontSize="10" fill="rgba(255,140,140,0.8)" fontFamily="sans-serif">Фокино</text>
-                    <text x="278" y="421" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2026</text>
+                    <line x1="225" y1="440" x2="170" y2="450" stroke="rgba(255,80,80,0.35)" strokeWidth="0.8" />
+                    <circle cx="225" cy="440" r="8" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.4)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="225" cy="440" r="3.5" fill="rgba(255,80,80,0.5)" />
+                    <text x="108" y="447" fontSize="10" fill="rgba(255,140,140,0.9)" fontFamily="sans-serif" fontWeight="600">Фокино</text>
+                    <text x="108" y="458" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2028</text>
                   </g>
 
-                  {/* ВРАНГЕЛЬ — 2026 */}
+                  {/* ВЛАДИВОСТОК — 2027 (крайний юг) */}
                   <g className="cursor-pointer">
-                    <circle cx="315" cy="395" r="9" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />
-                    <circle cx="315" cy="395" r="4" fill="rgba(255,80,80,0.4)" />
-                    <text x="320" y="390" fontSize="10" fill="rgba(255,140,140,0.8)" fontFamily="sans-serif">Врангель</text>
-                    <text x="320" y="401" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2026</text>
+                    <line x1="200" y1="472" x2="152" y2="486" stroke="rgba(100,160,255,0.35)" strokeWidth="0.8" />
+                    <circle cx="200" cy="472" r="8" fill="rgba(100,160,255,0.1)" stroke="rgba(100,160,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="200" cy="472" r="3.5" fill="rgba(100,160,255,0.6)" />
+                    <text x="90" y="483" fontSize="10" fill="rgba(150,200,255,0.9)" fontFamily="sans-serif" fontWeight="600">Владивосток</text>
+                    <text x="90" y="494" fontSize="8" fill="rgba(150,200,255,0.5)" fontFamily="sans-serif">2027</text>
                   </g>
 
                   {/* Маршрут */}
-                  <path d="M 230 345 L 260 380 L 195 430 L 270 415 L 290 360 L 315 395"
+                  <path d="M 175 230 L 290 310 L 298 365 L 278 400 L 308 428 L 225 440 L 200 472"
                     fill="none"
-                    stroke="rgba(215,154,87,0.2)"
+                    stroke="rgba(215,154,87,0.15)"
                     strokeWidth="1"
                     strokeDasharray="5 4"
                   />
@@ -851,11 +858,11 @@ export default function Index() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ background: "rgba(100,160,255,0.6)" }} />
-                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2024–2025</span>
+                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2027</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,80,80,0.5)" }} />
-                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2026</span>
+                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2028</span>
                   </div>
                 </div>
               </div>
