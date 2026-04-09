@@ -851,7 +851,7 @@ export default function Index() {
                 </svg>
 
                 {/* Легенда */}
-                <div className="absolute bottom-2 left-2 space-y-1.5 rounded-xl px-3 py-2" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)", border: "1px solid rgba(215,154,87,0.1)" }}>
+                <div className="absolute top-2 left-2 space-y-1.5 rounded-xl px-3 py-2" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)", border: "1px solid rgba(215,154,87,0.1)" }}>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ background: "#d79a57" }} />
                     <span className="font-montserrat text-xs" style={{ color: "#d79a57" }}>Открыто</span>
