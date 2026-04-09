@@ -865,19 +865,19 @@ export default function Index() {
             <div className="space-y-4">
               {[
                 {
-                  year: "2024", label: "Основание", status: "done",
+                  year: "2026", label: "Основание", status: "done",
                   cities: ["Находка", "Волчанец"],
                   desc: "Запуск бренда. Первые клиенты. Первый адреналин.",
                   color: "#d79a57",
                 },
                 {
-                  year: "2025", label: "Экспансия", status: "active",
+                  year: "2027", label: "Экспансия", status: "active",
                   cities: ["Владивосток", "Уссурийск", "Большой Камень"],
                   desc: "Выход в крупнейшие города Приморья. Франшиза и партнёрства.",
                   color: "#6aa0ff",
                 },
                 {
-                  year: "2026", label: "Доминирование", status: "future",
+                  year: "2028", label: "Доминирование", status: "future",
                   cities: ["Фокино", "Врангель"],
                   desc: "Покрытие всего южного Приморья. Статус №1 региона.",
                   color: "#ff6464",
