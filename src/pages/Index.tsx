@@ -1080,49 +1080,7 @@ export default function Index() {
                       onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
                   </div>
 
-                  {/* Формат тура */}
-                  <div>
-                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Формат тура</label>
-                    <div className="relative">
-                      <select value={form.tour} onChange={e => setForm({ ...form, tour: e.target.value })}
-                        className="w-full rounded-xl px-4 py-3 font-montserrat text-sm focus:outline-none transition-all appearance-none cursor-pointer"
-                        style={{ background: "#111", border: "1px solid #222", color: form.tour ? "#fff" : "#555" }}
-                        onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
-                        onBlur={e => (e.currentTarget.style.borderColor = "#222")}>
-                        <option value="" style={{ color: "#555" }}>Выберите формат...</option>
-                        <optgroup label="Стандартные туры" style={{ color: "#888" }}>
-                          <option value="Первый шаг — 5 мин (600 ₽)">Первый шаг — 5 мин · 600 ₽</option>
-                          <option value="Разгон — 10 мин (1 500 ₽)">Разгон — 10 мин · 1 500 ₽</option>
-                          <option value="Вольный ветер — 20 мин (2 500 ₽)">Вольный ветер — 20 мин · 2 500 ₽</option>
-                          <option value="Лесной дозор — 40 мин (4 500 ₽)">Лесной дозор — 40 мин · 4 500 ₽</option>
-                          <option value="Дикая трасса — 60 мин (6 000 ₽)">Дикая трасса — 60 мин · 6 000 ₽</option>
-                        </optgroup>
-                        <optgroup label="Индивидуально" style={{ color: "#888" }}>
-                          <option value="Свободный маршрут — 1.5–2 ч (10 000 ₽)">Свободный маршрут — 1.5–2 ч · 10 000 ₽</option>
-                        </optgroup>
-                        <optgroup label="Мероприятия" style={{ color: "#888" }}>
-                          <option value="Корпоратив">Корпоратив</option>
-                          <option value="День рождения">День рождения 🥳</option>
-                          <option value="Тимбилдинг">Тимбилдинг</option>
-                          <option value="Семейная поездка">Семейная поездка</option>
-                        </optgroup>
-                      </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "#d79a57" }}>
-                        <Icon name="ChevronDown" size={16} />
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Пожелания */}
-                  <div>
-                    <label className="font-montserrat text-xs uppercase tracking-widest mb-2 block" style={{ color: "rgba(215,154,87,0.7)" }}>Пожелания</label>
-                    <textarea placeholder="Дата, количество человек, вопросы..." rows={3}
-                      value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 font-montserrat text-sm text-white focus:outline-none resize-none transition-all"
-                      style={{ background: "#111", border: "1px solid #222" }}
-                      onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
-                      onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
-                  </div>
 
                   {sendError && (
                     <div className="font-montserrat text-xs py-2 px-3 rounded-lg" style={{ color: "#e07070", background: "rgba(220,80,80,0.08)", border: "1px solid rgba(220,80,80,0.2)" }}>
