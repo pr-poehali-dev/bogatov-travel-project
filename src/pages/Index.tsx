@@ -5,12 +5,15 @@ const IMG_ACTION = "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-405
 const IMG_GROUP = "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/87045daa-6abe-4a68-941b-6dbc74b9babf.jpg";
 const IMG_AERIAL = "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/5ef3539e-79ac-476e-b0de-6f0a726ada7c.jpg";
 
+const LOGO_URL = "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/77621a21-c8f1-470e-a2cb-2eb58e47134f.jpeg";
+
 const NAV_ITEMS = [
   { label: "О нас", href: "#about" },
   { label: "Туры", href: "#tours" },
   { label: "Калькулятор", href: "#calculator" },
   { label: "Галерея", href: "#gallery" },
   { label: "Отзывы", href: "#reviews" },
+  { label: "Карта", href: "#roadmap" },
   { label: "Контакты", href: "#booking" },
 ];
 
@@ -381,6 +384,7 @@ export default function Index() {
   const calcRef = useInView();
   const galleryRef = useInView();
   const reviewsRef = useInView();
+  const roadmapRef = useInView();
 
   const gold = "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)";
   const goldText = { background: gold, WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent" as const };
@@ -392,7 +396,10 @@ export default function Index() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md" : ""}`}
         style={{ background: scrolled ? "rgba(5,5,5,0.92)" : "transparent", borderBottom: scrolled ? "1px solid rgba(215,154,87,0.1)" : "none" }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-cormorant text-2xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</a>
+          <a href="/" className="flex items-center gap-3 group">
+            <img src={LOGO_URL} alt="BOGATOV TRAVEL" className="h-10 w-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-110" style={{ filter: "drop-shadow(0 0 8px rgba(215,154,87,0.4))" }} />
+            <span className="font-cormorant text-2xl tracking-widest font-semibold hidden sm:block" style={goldText}>BOGATOV TRAVEL</span>
+          </a>
           <div className="hidden md:flex items-center gap-7">
             {NAV_ITEMS.map(item => (
               <a key={item.href} href={item.href}
@@ -450,11 +457,15 @@ export default function Index() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
-              style={{ background: gold, color: "#160f07" }}>
+              style={{ background: gold, color: "#160f07" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 24px rgba(215,154,87,0.45)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
               Забронировать тур
             </a>
             <a href="#tours" className="px-8 py-3 rounded-full font-montserrat text-xs uppercase tracking-widest transition-all duration-300"
-              style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57", background: "rgba(215,154,87,0.04)" }}>
+              style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57", background: "rgba(215,154,87,0.04)" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.12)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.6)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.04)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)"; }}>
               Смотреть туры
             </a>
           </div>
@@ -596,8 +607,10 @@ export default function Index() {
                   <div className="font-cormorant text-5xl text-white">{TOUR_PREMIUM.price}</div>
                   <div className="font-montserrat text-sm mt-1" style={{ color: "#d79a57" }}>{TOUR_PREMIUM.passenger}</div>
                 </div>
-                <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest"
-                  style={{ background: gold, color: "#160f07" }}>
+                <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
+                  style={{ background: gold, color: "#160f07" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 24px rgba(215,154,87,0.45)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
                   Забронировать
                 </a>
               </div>
@@ -688,6 +701,292 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ROADMAP */}
+      <section id="roadmap" className="py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg,#040404,#080808)" }}>
+        <div ref={roadmapRef.ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${roadmapRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+
+          {/* Заголовок */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="w-8 h-px" style={{ background: "#d79a57" }} />
+              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Дорожная карта</span>
+              <div className="w-8 h-px" style={{ background: "#d79a57" }} />
+            </div>
+            <h2 className="font-cormorant text-white mb-4" style={{ fontSize: "clamp(32px,5vw,60px)" }}>
+              Цель — стать <span style={{ background: "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>№1 в Приморском крае</span>
+            </h2>
+            <p className="font-montserrat text-sm max-w-xl mx-auto" style={{ color: "#777" }}>
+              3 года. 7 городов. Один путь — стать лучшим приключением Дальнего Востока
+            </p>
+          </div>
+
+          {/* Карта + города */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+
+            {/* SVG карта Приморского края */}
+            <div className="relative flex items-center justify-center">
+              <div className="relative w-full max-w-md mx-auto">
+                {/* Фоновое свечение */}
+                <div className="absolute inset-0 rounded-3xl" style={{ background: "radial-gradient(circle at 40% 60%, rgba(215,154,87,0.12), transparent 70%)" }} />
+
+                <svg viewBox="0 0 400 520" className="w-full h-auto" style={{ filter: "drop-shadow(0 0 30px rgba(215,154,87,0.15))" }}>
+                  {/* Контур Приморского края (стилизованный) */}
+                  <defs>
+                    <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgba(215,154,87,0.15)" />
+                      <stop offset="100%" stopColor="rgba(215,154,87,0.05)" />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                  </defs>
+
+                  {/* Форма Приморского края */}
+                  <path d="M 180 20 L 230 35 L 280 55 L 320 90 L 340 130 L 345 175 L 335 210 L 350 245 L 355 280 L 340 320 L 320 355 L 290 385 L 260 415 L 230 445 L 200 470 L 170 455 L 145 430 L 120 400 L 100 365 L 85 325 L 80 285 L 90 245 L 75 210 L 65 170 L 75 130 L 95 95 L 125 65 L 155 40 Z"
+                    fill="url(#mapGrad)"
+                    stroke="rgba(215,154,87,0.4)"
+                    strokeWidth="1.5"
+                    className="transition-all duration-500"
+                  />
+
+                  {/* Береговая линия (пунктир) */}
+                  <path d="M 200 470 L 170 455 L 145 430 L 120 400 L 100 365 L 85 325 L 80 285 L 90 245 L 75 210"
+                    fill="none"
+                    stroke="rgba(215,154,87,0.25)"
+                    strokeWidth="1"
+                    strokeDasharray="4 3"
+                  />
+
+                  {/* Внутренняя сетка */}
+                  <path d="M 150 100 L 300 100 M 120 180 L 330 180 M 100 260 L 340 260 M 85 340 L 320 340 M 110 420 L 270 420"
+                    stroke="rgba(215,154,87,0.06)"
+                    strokeWidth="0.5"
+                  />
+
+                  {/* НАХОДКА — открыта ✓ */}
+                  <g className="cursor-pointer" style={{ filter: "url(#glow)" }}>
+                    <circle cx="260" cy="380" r="12" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
+                      <animate attributeName="r" values="12;16;12" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="260" cy="380" r="5" fill="#d79a57" />
+                    <text x="275" y="375" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Находка ✓</text>
+                    <text x="275" y="387" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
+                  </g>
+
+                  {/* ВОЛЧАНЕЦ — открыт ✓ */}
+                  <g className="cursor-pointer" style={{ filter: "url(#glow)" }}>
+                    <circle cx="230" cy="345" r="12" fill="rgba(215,154,87,0.2)" stroke="#d79a57" strokeWidth="1.5">
+                      <animate attributeName="r" values="12;16;12" dur="2.3s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="1;0.6;1" dur="2.3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="230" cy="345" r="5" fill="#d79a57" />
+                    <text x="115" y="340" fontSize="11" fill="#f1c98a" fontFamily="sans-serif" fontWeight="600">Волчанец ✓</text>
+                    <text x="115" y="352" fontSize="9" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">Открыто</text>
+                  </g>
+
+                  {/* ВЛАДИВОСТОК — 2024 */}
+                  <g className="cursor-pointer">
+                    <circle cx="195" cy="430" r="9" fill="rgba(100,160,255,0.1)" stroke="rgba(100,160,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="195" cy="430" r="4" fill="rgba(100,160,255,0.6)" />
+                    <text x="130" y="415" fontSize="10" fill="rgba(150,200,255,0.8)" fontFamily="sans-serif">Владивосток</text>
+                    <text x="130" y="426" fontSize="8" fill="rgba(150,200,255,0.5)" fontFamily="sans-serif">2024 → план</text>
+                  </g>
+
+                  {/* УССУРИЙСК — 2025 */}
+                  <g className="cursor-pointer">
+                    <circle cx="190" cy="305" r="9" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="190" cy="305" r="4" fill="rgba(180,120,255,0.5)" />
+                    <text x="200" y="300" fontSize="10" fill="rgba(200,160,255,0.8)" fontFamily="sans-serif">Уссурийск</text>
+                    <text x="200" y="311" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2025</text>
+                  </g>
+
+                  {/* БОЛЬШОЙ КАМЕНЬ — 2025 */}
+                  <g className="cursor-pointer">
+                    <circle cx="290" cy="360" r="9" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.5)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="290" cy="360" r="4" fill="rgba(180,120,255,0.5)" />
+                    <text x="295" y="355" fontSize="9" fill="rgba(200,160,255,0.8)" fontFamily="sans-serif">Б. Камень</text>
+                    <text x="295" y="366" fontSize="8" fill="rgba(200,160,255,0.5)" fontFamily="sans-serif">2025</text>
+                  </g>
+
+                  {/* ФОКИНО — 2026 */}
+                  <g className="cursor-pointer">
+                    <circle cx="270" cy="415" r="9" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="270" cy="415" r="4" fill="rgba(255,80,80,0.4)" />
+                    <text x="278" y="410" fontSize="10" fill="rgba(255,140,140,0.8)" fontFamily="sans-serif">Фокино</text>
+                    <text x="278" y="421" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2026</text>
+                  </g>
+
+                  {/* ВРАНГЕЛЬ — 2026 */}
+                  <g className="cursor-pointer">
+                    <circle cx="315" cy="395" r="9" fill="rgba(255,80,80,0.1)" stroke="rgba(255,80,80,0.35)" strokeWidth="1.5" strokeDasharray="3 2" />
+                    <circle cx="315" cy="395" r="4" fill="rgba(255,80,80,0.4)" />
+                    <text x="320" y="390" fontSize="10" fill="rgba(255,140,140,0.8)" fontFamily="sans-serif">Врангель</text>
+                    <text x="320" y="401" fontSize="8" fill="rgba(255,140,140,0.5)" fontFamily="sans-serif">2026</text>
+                  </g>
+
+                  {/* Маршрут */}
+                  <path d="M 230 345 L 260 380 L 195 430 L 270 415 L 290 360 L 315 395"
+                    fill="none"
+                    stroke="rgba(215,154,87,0.2)"
+                    strokeWidth="1"
+                    strokeDasharray="5 4"
+                  />
+
+                  {/* Компас */}
+                  <g transform="translate(50, 50)">
+                    <circle cx="0" cy="0" r="18" fill="rgba(215,154,87,0.06)" stroke="rgba(215,154,87,0.2)" strokeWidth="0.8" />
+                    <line x1="0" y1="-14" x2="0" y2="14" stroke="rgba(215,154,87,0.4)" strokeWidth="0.8" />
+                    <line x1="-14" y1="0" x2="14" y2="0" stroke="rgba(215,154,87,0.4)" strokeWidth="0.8" />
+                    <text x="-3" y="-18" fontSize="8" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">С</text>
+                  </g>
+                </svg>
+
+                {/* Легенда */}
+                <div className="absolute bottom-2 left-2 space-y-1.5 rounded-xl px-3 py-2" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)", border: "1px solid rgba(215,154,87,0.1)" }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: "#d79a57" }} />
+                    <span className="font-montserrat text-xs" style={{ color: "#d79a57" }}>Открыто</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: "rgba(100,160,255,0.6)" }} />
+                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2024–2025</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,80,80,0.5)" }} />
+                    <span className="font-montserrat text-xs" style={{ color: "#888" }}>2026</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Таймлайн этапов */}
+            <div className="space-y-4">
+              {[
+                {
+                  year: "2024", label: "Основание", status: "done",
+                  cities: ["Находка", "Волчанец"],
+                  desc: "Запуск бренда. Первые клиенты. Первый адреналин.",
+                  color: "#d79a57",
+                },
+                {
+                  year: "2025", label: "Экспансия", status: "active",
+                  cities: ["Владивосток", "Уссурийск", "Большой Камень"],
+                  desc: "Выход в крупнейшие города Приморья. Франшиза и партнёрства.",
+                  color: "#6aa0ff",
+                },
+                {
+                  year: "2026", label: "Доминирование", status: "future",
+                  cities: ["Фокино", "Врангель"],
+                  desc: "Покрытие всего южного Приморья. Статус №1 региона.",
+                  color: "#ff6464",
+                },
+              ].map((phase, i) => (
+                <div
+                  key={i}
+                  className="group relative rounded-2xl p-6 cursor-default transition-all duration-400"
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: `1px solid ${phase.status === "done" ? "rgba(215,154,87,0.25)" : "rgba(255,255,255,0.06)"}`,
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                    e.currentTarget.style.borderColor = `${phase.color}55`;
+                    e.currentTarget.style.transform = "translateX(6px)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                    e.currentTarget.style.borderColor = phase.status === "done" ? "rgba(215,154,87,0.25)" : "rgba(255,255,255,0.06)";
+                    e.currentTarget.style.transform = "translateX(0)";
+                  }}
+                >
+                  {/* Левая полоса */}
+                  <div className="absolute left-0 top-4 bottom-4 w-0.5 rounded-full" style={{ background: phase.color, opacity: phase.status === "done" ? 1 : 0.4 }} />
+
+                  <div className="flex items-start gap-4 pl-3">
+                    <div className="flex-shrink-0 text-center">
+                      <div className="font-cormorant text-3xl font-bold" style={{ color: phase.color }}>{phase.year}</div>
+                      <div className="font-montserrat text-xs uppercase tracking-wider mt-0.5" style={{ color: `${phase.color}aa` }}>{phase.label}</div>
+                      {phase.status === "done" && (
+                        <div className="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background: "rgba(215,154,87,0.1)", border: "1px solid rgba(215,154,87,0.3)" }}>
+                          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#d79a57" }} />
+                          <span className="font-montserrat text-xs" style={{ color: "#d79a57" }}>Работаем</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {phase.cities.map(city => (
+                          <span key={city} className="font-montserrat text-xs px-2.5 py-1 rounded-full transition-all duration-300"
+                            style={{
+                              background: `${phase.color}18`,
+                              border: `1px solid ${phase.color}44`,
+                              color: phase.color,
+                            }}>
+                            {city}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="font-montserrat text-sm leading-relaxed" style={{ color: "#777" }}>{phase.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Финальная цель */}
+              <div
+                className="relative rounded-2xl p-6 text-center overflow-hidden cursor-default transition-all duration-400 group"
+                style={{ background: "rgba(215,154,87,0.06)", border: "1px solid rgba(215,154,87,0.2)" }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "rgba(215,154,87,0.1)";
+                  e.currentTarget.style.transform = "scale(1.02)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "rgba(215,154,87,0.06)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle at center, rgba(215,154,87,0.12), transparent 70%)" }} />
+                <div className="font-montserrat text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(215,154,87,0.6)" }}>Главная цель</div>
+                <div className="font-cormorant text-3xl text-white mb-1">№1 в Приморском крае</div>
+                <div className="font-montserrat text-sm" style={{ color: "#666" }}>7 городов · 3 года · 1 миссия</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Статистика прогресса */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { value: "2", label: "Города работают", icon: "MapPin" },
+              { value: "7", label: "Городов к 2026", icon: "Target" },
+              { value: "3", label: "Года до цели №1", icon: "Calendar" },
+              { value: "∞", label: "Адреналина для вас", icon: "Zap" },
+            ].map((stat, i) => (
+              <div
+                key={i}
+                className="rounded-2xl p-5 text-center transition-all duration-300 cursor-default group"
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(215,154,87,0.1)" }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "rgba(215,154,87,0.07)";
+                  e.currentTarget.style.borderColor = "rgba(215,154,87,0.3)";
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                  e.currentTarget.style.borderColor = "rgba(215,154,87,0.1)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <Icon name={stat.icon} size={20} style={{ color: "#d79a57", margin: "0 auto 8px" } as React.CSSProperties} />
+                <div className="font-cormorant text-4xl text-white mb-1">{stat.value}</div>
+                <div className="font-montserrat text-xs" style={{ color: "#666" }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* BOOKING */}
       <section id="booking" className="py-28 px-6" style={{ background: "radial-gradient(circle at center, rgba(215,154,87,0.08), transparent 50%), linear-gradient(180deg,#090909,#050505)" }}>
         <div className="max-w-5xl mx-auto">
@@ -713,8 +1012,10 @@ export default function Index() {
                   <div className="font-cormorant text-3xl text-white">Заявка отправлена!</div>
                   <p className="font-montserrat text-sm" style={{ color: "#888" }}>Мы свяжемся с вами в ближайшее время</p>
                   <button onClick={() => { setSent(false); setForm({ name: "", phone: "", email: "", tour: "", message: "" }); }}
-                    className="font-montserrat text-xs uppercase tracking-widest px-6 py-2 rounded-full"
-                    style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}>
+                    className="font-montserrat text-xs uppercase tracking-widest px-6 py-2 rounded-full transition-all duration-300"
+                    style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.1)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.6)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)"; }}>
                     Отправить ещё
                   </button>
                 </div>
@@ -823,7 +1124,9 @@ export default function Index() {
                   )}
                   <button type="submit" disabled={sending}
                     className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
-                    style={{ background: sending ? "rgba(215,154,87,0.5)" : gold, color: "#160f07", cursor: sending ? "wait" : "pointer" }}>
+                    style={{ background: sending ? "rgba(215,154,87,0.5)" : gold, color: "#160f07", cursor: sending ? "wait" : "pointer" }}
+                    onMouseEnter={e => { if (!sending) { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(215,154,87,0.4)"; } }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
                     {sending ? "Отправляем..." : "Отправить заявку"}
                   </button>
                 </form>
