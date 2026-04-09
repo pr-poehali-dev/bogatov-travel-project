@@ -959,7 +959,7 @@ export default function Index() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { value: "2", label: "Города работают", icon: "MapPin" },
-              { value: "7", label: "Городов к 2026", icon: "Target" },
+              { value: "7", label: "Городов к 2029", icon: "Target" },
               { value: "3", label: "Года до цели №1", icon: "Calendar" },
               { value: "∞", label: "Адреналина для вас", icon: "Zap" },
             ].map((stat, i) => (
