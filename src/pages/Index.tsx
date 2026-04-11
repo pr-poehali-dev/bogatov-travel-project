@@ -672,6 +672,17 @@ export default function Index() {
             <p className="font-montserrat text-sm" style={{ color: "#888" }}>Выберите параметры и получите мгновенный расчёт</p>
           </div>
           <Calculator />
+          <div className="mt-8 text-center">
+            <a href="#club"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
+              style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a, #d79a57)", color: "#160f07", boxShadow: "0 6px 24px rgba(215,154,87,0.35)" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 10px 32px rgba(215,154,87,0.55)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(215,154,87,0.35)"; }}>
+              <Icon name="Crown" size={14} />
+              Получить скидку 20%
+            </a>
+            <p className="mt-2 font-montserrat text-xs" style={{ color: "#555" }}>Для участников Elite Club на любой тур</p>
+          </div>
         </div>
       </section>
 
