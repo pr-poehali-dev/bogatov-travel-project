@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { label: "Галерея", href: "#gallery" },
   { label: "Отзывы", href: "#reviews" },
   { label: "Карта", href: "#roadmap" },
+  { label: "Elite Club", href: "#club" },
   { label: "Контакты", href: "#booking" },
 ];
 
@@ -477,6 +478,13 @@ export default function Index() {
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.12)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.6)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.04)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)"; }}>
               Смотреть туры
+            </a>
+            <a href="#club" className="px-8 py-3 rounded-full font-montserrat text-xs uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              style={{ border: "1px solid rgba(215,154,87,0.5)", color: "#f1c98a", background: "rgba(215,154,87,0.08)" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.18)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.8)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.08)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)"; }}>
+              <Icon name="Crown" size={13} />
+              Премиум клуб
             </a>
           </div>
 
@@ -1173,7 +1181,7 @@ export default function Index() {
           </div>
           <h2 className="font-cormorant text-4xl md:text-5xl font-bold mb-3">
             <span style={{ color: "#f3e2bf" }}>Больше приключений —</span><br />
-            <span style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>за меньше денег</span>
+            <span style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Получи премиум условия</span>
           </h2>
           <p className="font-montserrat text-sm mb-10" style={{ color: "#888" }}>
             Окупается уже за первый тур. Никаких скрытых условий.
@@ -1222,8 +1230,8 @@ export default function Index() {
             </div>
             {[
               { label: "🏍️ 20% скидка на все туры", value: "Приоритет брони + 1 200 ₽/час экономии" },
-              { label: "👕 Бренд-мерч по VIP-ценам", value: "Худи 10 000 ₽ вместо 15 000 ₽, кепка 3 000 ₽" },
-              { label: "🎁 Мега-розыгрыши квадриков", value: "Ежемесячно + персональный шмот за выслугу" },
+              { label: "👕 Бренд-мерч по VIP-ценам", value: "Выгодней до 75%" },
+              { label: "🎁 Мега-розыгрыши", value: "Ежемесячно + персональный шмот за выслугу" },
               { label: "🔒 Закрытые мероприятия", value: "Партнёрские скидки + приватный чат с элитой" },
             ].map((row, i) => (
               <div key={row.label} className="grid grid-cols-2 py-4 px-6 font-montserrat text-sm gap-4" style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
@@ -1242,11 +1250,11 @@ export default function Index() {
                 ))}
               </div>
               <span className="font-montserrat text-sm" style={{ color: "#c9b99a" }}>
-                Уже <span className="font-bold" style={{ color: "#d79a57" }}>+{clubCount}</span> элитных пилотов внутри 🏆
+                Стань одним из первых
               </span>
             </div>
             <div className="rounded-xl px-5 py-3 font-montserrat text-xs font-bold" style={{ background: "rgba(255,80,80,0.08)", border: "1px solid rgba(255,80,80,0.2)", color: "#ff6b6b" }}>
-              🔥 Осталось 20 мест!
+              🔥 Места ограничены
             </div>
           </div>
 
