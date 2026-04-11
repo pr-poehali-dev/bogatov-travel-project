@@ -466,23 +466,25 @@ export default function Index() {
             Квадротуры, приключения и активный отдых. Эмоции, стиль и мощный драйв в каждой поездке.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
-              style={{ background: gold, color: "#160f07" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 24px rgba(215,154,87,0.45)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
-              Забронировать тур
-            </a>
-            <a href="#tours" className="px-8 py-3 rounded-full font-montserrat text-xs uppercase tracking-widest transition-all duration-300"
-              style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57", background: "rgba(215,154,87,0.04)" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.12)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.6)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.04)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)"; }}>
-              Смотреть туры
-            </a>
-            <a href="#club" className="px-8 py-3 rounded-full font-montserrat text-xs uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
-              style={{ border: "1px solid rgba(215,154,87,0.5)", color: "#f1c98a", background: "rgba(215,154,87,0.08)" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.18)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.8)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.08)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)"; }}>
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a href="#booking" className="px-8 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
+                style={{ background: gold, color: "#160f07" }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 28px rgba(215,154,87,0.55)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
+                Забронировать тур
+              </a>
+              <a href="#tours" className="px-8 py-3 rounded-full font-montserrat text-xs uppercase tracking-widest transition-all duration-300"
+                style={{ border: "1px solid rgba(215,154,87,0.35)", color: "#d79a57", background: "rgba(215,154,87,0.04)" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.14)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.7)"; e.currentTarget.style.transform = "scale(1.05)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.04)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.35)"; e.currentTarget.style.transform = "scale(1)"; }}>
+                Смотреть туры
+              </a>
+            </div>
+            <a href="#club" className="px-10 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-2"
+              style={{ border: "1px solid rgba(215,154,87,0.55)", color: "#f1c98a", background: "rgba(215,154,87,0.09)", letterSpacing: "0.12em" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(215,154,87,0.2)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.9)"; e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(215,154,87,0.25)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(215,154,87,0.09)"; e.currentTarget.style.borderColor = "rgba(215,154,87,0.55)"; e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
               <Icon name="Crown" size={13} />
               Премиум клуб
             </a>
@@ -1200,7 +1202,7 @@ export default function Index() {
             </div>
             {/* Калькулятор */}
             <div className="rounded-2xl p-8" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}>
-              <div className="font-montserrat text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(215,154,87,0.6)" }}>Скидка участника — 20%</div>
+              <div className="font-montserrat text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(215,154,87,0.6)" }}>Скидка участника — 20% на любой тур</div>
               <div className="space-y-3 text-left">
                 {[
                   { tour: "Разгон (10 мин)", base: 1500, saved: 300 },
