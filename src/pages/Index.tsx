@@ -385,6 +385,16 @@ export default function Index() {
   const galleryRef = useInView();
   const reviewsRef = useInView();
   const roadmapRef = useInView();
+  const clubRef = useInView();
+  const [clubCount, setClubCount] = useState(0);
+  useEffect(() => {
+    if (!clubRef.inView) return;
+    const target = 247;
+    const step = Math.ceil(target / 40);
+    let cur = 0;
+    const t = setInterval(() => { cur = Math.min(cur + step, target); setClubCount(cur); if (cur >= target) clearInterval(t); }, 40);
+    return () => clearInterval(t);
+  }, [clubRef.inView]);
 
   const gold = "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)";
   const goldText = { background: gold, WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent" as const };
@@ -1135,6 +1145,121 @@ export default function Index() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ELITE CLUB */}
+      <section id="club" className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(215,154,87,0.06) 0%, transparent 70%)" }} />
+        <div ref={clubRef.ref} className={`max-w-4xl mx-auto text-center transition-all duration-700 ${clubRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+
+          {/* Логотип + заголовок */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="relative">
+              <img src={LOGO_URL} alt="BOGATOV TRAVEL" className="h-14 w-14 rounded-full object-cover" style={{ filter: "drop-shadow(0 0 12px rgba(215,154,87,0.5))", border: "2px solid rgba(215,154,87,0.4)" }} />
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs" style={{ background: "#d79a57", color: "#160f07" }}>
+                <Icon name="Crown" size={11} />
+              </div>
+            </div>
+            <div className="text-left">
+              <div className="font-cormorant text-sm uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.6)" }}>BOGATOV TRAVEL</div>
+              <div className="font-cormorant text-3xl md:text-4xl font-bold tracking-widest" style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a, #d79a57)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>ELITE CLUB</div>
+            </div>
+          </div>
+
+          {/* Хедлайн */}
+          <div className="inline-block mb-3 px-4 py-1.5 rounded-full font-montserrat text-xs font-bold uppercase tracking-widest" style={{ background: "rgba(215,154,87,0.15)", border: "1px solid rgba(215,154,87,0.3)", color: "#d79a57" }}>
+            🔥 Вступай в элиту
+          </div>
+          <h2 className="font-cormorant text-4xl md:text-5xl font-bold mb-3">
+            <span style={{ color: "#f3e2bf" }}>Больше приключений —</span><br />
+            <span style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>за меньше денег</span>
+          </h2>
+          <p className="font-montserrat text-sm mb-10" style={{ color: "#888" }}>
+            Окупается уже за первый тур. Никаких скрытых условий.
+          </p>
+
+          {/* Цена + калькулятор окупаемости */}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            {/* Цена */}
+            <div className="rounded-2xl p-8 text-center" style={{ background: "rgba(215,154,87,0.06)", border: "1px solid rgba(215,154,87,0.25)" }}>
+              <div className="font-montserrat text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(215,154,87,0.6)" }}>Подписка</div>
+              <div className="font-cormorant text-6xl font-bold mb-1" style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>1 500</div>
+              <div className="font-montserrat text-sm mb-4" style={{ color: "#888" }}>рублей в месяц</div>
+              <div className="font-montserrat text-xs py-2 px-4 rounded-full inline-block" style={{ background: "rgba(215,154,87,0.1)", color: "#d79a57" }}>
+                = 50 ₽ в день
+              </div>
+            </div>
+            {/* Калькулятор */}
+            <div className="rounded-2xl p-8" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}>
+              <div className="font-montserrat text-xs uppercase tracking-widest mb-4" style={{ color: "rgba(215,154,87,0.6)" }}>Скидка участника — 15%</div>
+              <div className="space-y-3 text-left">
+                {[
+                  { tour: "Разгон (10 мин)", price: 1500, saved: 225 },
+                  { tour: "Вольный ветер (20 мин)", price: 2500, saved: 375 },
+                  { tour: "Лесной дозор (40 мин)", price: 4500, saved: 675 },
+                ].map(row => (
+                  <div key={row.tour} className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                    <span className="font-montserrat text-xs" style={{ color: "#aaa" }}>{row.tour}</span>
+                    <span className="font-montserrat text-xs font-semibold" style={{ color: "#d79a57" }}>−{row.saved} ₽</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 font-montserrat text-xs text-center" style={{ color: "#666" }}>
+                1 тур «Лесной дозор» = подписка окупается
+              </div>
+            </div>
+          </div>
+
+          {/* Таблица плюшек */}
+          <div className="rounded-2xl overflow-hidden mb-10" style={{ border: "1px solid rgba(215,154,87,0.2)" }}>
+            <div className="grid grid-cols-3 py-3 px-6 font-montserrat text-xs uppercase tracking-widest" style={{ background: "rgba(215,154,87,0.12)", color: "rgba(215,154,87,0.8)" }}>
+              <span className="text-left">Привилегия</span>
+              <span className="text-center">Без клуба</span>
+              <span className="text-right">Elite Club</span>
+            </div>
+            {[
+              { label: "Скидка на туры", without: "—", with: "15%" },
+              { label: "Бронь без предоплаты", without: "—", with: "✓" },
+              { label: "Приоритетная запись", without: "—", with: "✓" },
+              { label: "Закрытые выезды", without: "—", with: "✓" },
+              { label: "Подарок в день рождения", without: "—", with: "✓" },
+              { label: "Закрытый Telegram-чат", without: "—", with: "✓" },
+            ].map((row, i) => (
+              <div key={row.label} className="grid grid-cols-3 py-3 px-6 font-montserrat text-sm" style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                <span className="text-left" style={{ color: "#c9b99a" }}>{row.label}</span>
+                <span className="text-center" style={{ color: "#555" }}>{row.without}</span>
+                <span className="text-right font-semibold" style={{ color: "#d79a57" }}>{row.with}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* FOMO + счётчик */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+            <div className="flex items-center gap-3 rounded-xl px-5 py-3" style={{ background: "rgba(215,154,87,0.08)", border: "1px solid rgba(215,154,87,0.2)" }}>
+              <div className="flex -space-x-2">
+                {["А","М","Е"].map(l => (
+                  <div key={l} className="w-7 h-7 rounded-full flex items-center justify-center font-montserrat text-xs font-bold" style={{ background: "linear-gradient(135deg,#d79a57,#f1c98a)", color: "#160f07", border: "2px solid #0d0d0d" }}>{l}</div>
+                ))}
+              </div>
+              <span className="font-montserrat text-sm" style={{ color: "#c9b99a" }}>
+                <span className="font-bold" style={{ color: "#d79a57" }}>{clubCount}</span> участников уже в клубе
+              </span>
+            </div>
+            <div className="rounded-xl px-5 py-3 font-montserrat text-xs" style={{ background: "rgba(255,80,80,0.08)", border: "1px solid rgba(255,80,80,0.2)", color: "#ff6b6b" }}>
+              🔥 Осталось 3 места по цене 1 500 ₽
+            </div>
+          </div>
+
+          {/* CTA кнопка */}
+          <a href={TG_LINK} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-montserrat text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            style={{ background: "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)", color: "#160f07", boxShadow: "0 8px 32px rgba(215,154,87,0.35)" }}>
+            <img src={LOGO_URL} alt="" className="w-6 h-6 rounded-full object-cover" style={{ filter: "brightness(0.3)" }} />
+            Подписаться
+            <Icon name="Play" size={14} />
+          </a>
+          <p className="mt-4 font-montserrat text-xs" style={{ color: "#555" }}>Оформление через Telegram за 2 минуты</p>
         </div>
       </section>
 
