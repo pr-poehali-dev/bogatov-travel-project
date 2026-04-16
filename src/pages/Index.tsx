@@ -401,8 +401,13 @@ export default function Index() {
   }, [clubRef.inView]);
 
   const [parallaxY, setParallaxY] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
-    const fn = () => setParallaxY(window.scrollY * 0.4);
+    const fn = () => {
+      const y = window.scrollY;
+      setParallaxY(y * 0.4);
+      setScrollY(y);
+    };
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -516,8 +521,12 @@ export default function Index() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="py-28 px-6">
-        <div ref={aboutRef.ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${aboutRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+      <section id="about" className="py-28 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ transform: `translateY(${scrollY * 0.08}px)` }}>
+          <div className="absolute top-10 right-[-10%] w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.07) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-10 left-[-5%] w-60 h-60 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.05) 0%, transparent 70%)" }} />
+        </div>
+        <div ref={aboutRef.ref} className={`max-w-7xl mx-auto relative transition-all duration-1000 ${aboutRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -550,8 +559,12 @@ export default function Index() {
       </section>
 
       {/* TOURS */}
-      <section id="tours" className="py-28 px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
-        <div ref={toursRef.ref} className={`max-w-5xl mx-auto transition-all duration-1000 ${toursRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+      <section id="tours" className="py-28 px-6 relative overflow-hidden" style={{ background: "rgba(255,255,255,0.015)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ transform: `translateY(${scrollY * 0.06}px)` }}>
+          <div className="absolute top-[-5%] left-[20%] w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.05) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-0 right-[10%] w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.04) 0%, transparent 70%)" }} />
+        </div>
+        <div ref={toursRef.ref} className={`max-w-5xl mx-auto relative transition-all duration-1000 ${toursRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -697,8 +710,8 @@ export default function Index() {
       </section>
 
       {/* GALLERY */}
-      <section id="gallery" className="py-28 px-6" style={{ background: "rgba(255,255,255,0.012)" }}>
-        <div ref={galleryRef.ref} className={`max-w-7xl mx-auto transition-all duration-1000 ${galleryRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+      <section id="gallery" className="py-28 px-6 relative overflow-hidden" style={{ background: "rgba(255,255,255,0.012)" }}>
+        <div ref={galleryRef.ref} className={`max-w-7xl mx-auto relative transition-all duration-1000 ${galleryRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -713,7 +726,8 @@ export default function Index() {
             {GALLERY.map((item, i) => (
               <div key={i} className={`group relative overflow-hidden rounded-2xl cursor-pointer ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
                 <img src={item.img} alt={item.label}
-                  className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${i === 0 ? "h-72 md:h-full" : "h-48 md:h-56"}`} />
+                  className={`w-full object-cover transition-transform duration-700 ${i === 0 ? "h-72 md:h-full" : "h-48 md:h-56"}`}
+                  style={{ transform: `scale(1.12) translateY(${scrollY * (0.03 + i * 0.01)}px)`, willChange: "transform" }} />
                 <div className="absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)" }}>
                   <span className="font-cormorant text-white text-xl">{item.label}</span>
@@ -725,8 +739,11 @@ export default function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section id="reviews" className="py-28 px-6">
-        <div ref={reviewsRef.ref} className={`max-w-4xl mx-auto transition-all duration-1000 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+      <section id="reviews" className="py-28 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ transform: `translateY(${scrollY * 0.07}px)` }}>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.05) 0%, transparent 70%)" }} />
+        </div>
+        <div ref={reviewsRef.ref} className={`max-w-4xl mx-auto relative transition-all duration-1000 ${reviewsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -1036,8 +1053,12 @@ export default function Index() {
       </section>
 
       {/* BOOKING */}
-      <section id="booking" className="py-28 px-6" style={{ background: "radial-gradient(circle at center, rgba(215,154,87,0.08), transparent 50%), linear-gradient(180deg,#090909,#050505)" }}>
-        <div className="max-w-5xl mx-auto">
+      <section id="booking" className="py-28 px-6 relative overflow-hidden" style={{ background: "radial-gradient(circle at center, rgba(215,154,87,0.08), transparent 50%), linear-gradient(180deg,#090909,#050505)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ transform: `translateY(${scrollY * 0.05}px)` }}>
+          <div className="absolute top-[-10%] right-[-5%] w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.06) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-[-10%] left-[-5%] w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.04) 0%, transparent 70%)" }} />
+        </div>
+        <div className="max-w-5xl mx-auto relative">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -1210,7 +1231,10 @@ export default function Index() {
 
       {/* ELITE CLUB */}
       <section id="club" className="py-24 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(215,154,87,0.06) 0%, transparent 70%)" }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(215,154,87,0.06) 0%, transparent 70%)", transform: `translateY(${scrollY * 0.06}px)` }}>
+          <div className="absolute top-0 left-[10%] w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.05) 0%, transparent 70%)" }} />
+          <div className="absolute bottom-0 right-[10%] w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(215,154,87,0.05) 0%, transparent 70%)" }} />
+        </div>
         <div ref={clubRef.ref} className={`max-w-4xl mx-auto text-center transition-all duration-700 ${clubRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
 
           {/* Логотип + заголовок */}
