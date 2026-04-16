@@ -68,7 +68,7 @@ def handler(event: dict, context) -> dict:
         text += f"💬 *Пожелания:* {message}\n"
 
     tg_ok = False
-    logger.info(f"TG token present: {bool(bot_token)}, chat_id present: {bool(chat_id)}")
+    logger.info(f"TG token present: {bool(bot_token)}, chat_id present: {bool(chat_id)}, chat_id value: {chat_id}")
     if bot_token and chat_id:
         tg_payload = json.dumps({
             "chat_id": chat_id,
