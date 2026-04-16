@@ -722,7 +722,29 @@ export default function Index() {
               Живые <span style={goldText}>эмоции</span>
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+          {/* Мобильная галерея — вертикальные карточки с параллаксом */}
+          <div className="flex flex-col gap-5 md:hidden">
+            {GALLERY.map((item, i) => (
+              <div key={i} className="relative overflow-hidden rounded-2xl" style={{ height: "260px" }}>
+                <img src={item.img} alt={item.label}
+                  className="w-full object-cover absolute inset-0"
+                  style={{
+                    height: "140%",
+                    top: "-20%",
+                    transform: `translateY(${scrollY * (0.04 + i * 0.015)}px)`,
+                    willChange: "transform"
+                  }} />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)" }} />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <span className="font-cormorant text-white text-2xl">{item.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Десктопная галерея — сетка */}
+          <div className="hidden md:grid md:grid-cols-3 gap-4">
             {GALLERY.map((item, i) => (
               <div key={i} className={`group relative overflow-hidden rounded-2xl cursor-pointer ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
                 <img src={item.img} alt={item.label}
