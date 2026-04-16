@@ -5,6 +5,9 @@ import os
 import json
 import urllib.request
 import psycopg2
+import logging
+
+logger = logging.getLogger()
 
 
 def handler(event: dict, context) -> dict:
@@ -65,6 +68,7 @@ def handler(event: dict, context) -> dict:
         text += f"💬 *Пожелания:* {message}\n"
 
     tg_ok = False
+    logger.info(f"TG token present: {bool(bot_token)}, chat_id present: {bool(chat_id)}")
     if bot_token and chat_id:
         tg_payload = json.dumps({
             "chat_id": chat_id,
@@ -81,8 +85,12 @@ def handler(event: dict, context) -> dict:
             with urllib.request.urlopen(tg_req, timeout=10) as resp:
                 tg_result = json.loads(resp.read())
                 tg_ok = tg_result.get("ok", False)
-        except Exception:
+                logger.info(f"TG response: {tg_result}")
+        except Exception as e:
+            logger.error(f"TG error: {e}")
             tg_ok = False
+    else:
+        logger.warning(f"TG skipped: token={bool(bot_token)}, chat_id={bool(chat_id)}")
 
     return {
         "statusCode": 200,
