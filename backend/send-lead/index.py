@@ -4,6 +4,7 @@
 import os
 import json
 import urllib.request
+import urllib.error
 import psycopg2
 import logging
 
@@ -86,6 +87,10 @@ def handler(event: dict, context) -> dict:
                 tg_result = json.loads(resp.read())
                 tg_ok = tg_result.get("ok", False)
                 logger.info(f"TG response: {tg_result}")
+        except urllib.error.HTTPError as e:
+            body_err = e.read().decode("utf-8")
+            logger.error(f"TG HTTPError {e.code}: {body_err}")
+            tg_ok = False
         except Exception as e:
             logger.error(f"TG error: {e}")
             tg_ok = False
