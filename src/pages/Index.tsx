@@ -373,6 +373,9 @@ export default function Index() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [sendError, setSendError] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -1113,15 +1116,44 @@ export default function Index() {
 
 
 
+                  {/* Чекбокс согласия */}
+                  <div className="flex items-start gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setAgreed(!agreed)}
+                      className="flex-shrink-0 w-5 h-5 rounded mt-0.5 border transition-all duration-200 flex items-center justify-center"
+                      style={{
+                        background: agreed ? "#d79a57" : "transparent",
+                        borderColor: agreed ? "#d79a57" : "rgba(215,154,87,0.4)",
+                      }}
+                    >
+                      {agreed && (
+                        <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
+                          <path d="M1 3.5L4 6.5L10 1" stroke="#160f07" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </button>
+                    <p className="font-montserrat text-xs leading-relaxed" style={{ color: "#888" }}>
+                      Я согласен(а) с{" "}
+                      <button type="button" onClick={() => setShowPrivacy(true)} className="underline transition-colors" style={{ color: "#d79a57", background: "none", border: "none", cursor: "pointer", padding: 0, font: "inherit" }}>
+                        политикой конфиденциальности
+                      </button>{" "}
+                      и даю{" "}
+                      <button type="button" onClick={() => setShowConsent(true)} className="underline transition-colors" style={{ color: "#d79a57", background: "none", border: "none", cursor: "pointer", padding: 0, font: "inherit" }}>
+                        согласие на обработку персональных данных
+                      </button>
+                    </p>
+                  </div>
+
                   {sendError && (
                     <div className="font-montserrat text-xs py-2 px-3 rounded-lg" style={{ color: "#e07070", background: "rgba(220,80,80,0.08)", border: "1px solid rgba(220,80,80,0.2)" }}>
                       {sendError}
                     </div>
                   )}
-                  <button type="submit" disabled={sending}
+                  <button type="submit" disabled={sending || !agreed}
                     className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300"
-                    style={{ background: sending ? "rgba(215,154,87,0.5)" : gold, color: "#160f07", cursor: sending ? "wait" : "pointer" }}
-                    onMouseEnter={e => { if (!sending) { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(215,154,87,0.4)"; } }}
+                    style={{ background: !agreed ? "rgba(215,154,87,0.25)" : sending ? "rgba(215,154,87,0.5)" : gold, color: !agreed ? "rgba(22,15,7,0.5)" : "#160f07", cursor: !agreed ? "not-allowed" : sending ? "wait" : "pointer" }}
+                    onMouseEnter={e => { if (!sending && agreed) { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(215,154,87,0.4)"; } }}
                     onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
                     {sending ? "Отправляем..." : "Отправить заявку"}
                   </button>
@@ -1282,6 +1314,63 @@ export default function Index() {
           <p className="mt-4 font-montserrat text-xs" style={{ color: "#555" }}>Оформление через Telegram за 2 минуты</p>
         </div>
       </section>
+
+      {/* МОДАЛЬНОЕ ОКНО — Политика конфиденциальности */}
+      {showPrivacy && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }} onClick={() => setShowPrivacy(false)}>
+          <div className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl overflow-hidden flex flex-col" style={{ background: "#0d0d0d", border: "1px solid rgba(215,154,87,0.25)" }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-8 py-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+              <h2 className="font-cormorant text-2xl text-white">Политика конфиденциальности</h2>
+              <button onClick={() => setShowPrivacy(false)} className="w-9 h-9 rounded-full flex items-center justify-center transition-all" style={{ border: "1px solid rgba(255,255,255,0.1)", color: "#888" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(215,154,87,0.4)"; e.currentTarget.style.color = "#d79a57"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#888"; }}>
+                <Icon name="X" size={16} />
+              </button>
+            </div>
+            <div className="overflow-y-auto px-8 py-6 space-y-5 font-montserrat text-sm leading-relaxed" style={{ color: "#aaa" }}>
+              <p style={{ color: "#d79a57" }} className="font-semibold text-base">BOGATOV TRAVEL — Политика конфиденциальности</p>
+              <p><strong className="text-white">1. Общие положения</strong><br/>Настоящая политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта BOGATOV TRAVEL (далее — Оператор).</p>
+              <p><strong className="text-white">2. Состав персональных данных</strong><br/>Оператор обрабатывает следующие персональные данные: имя, номер телефона, адрес электронной почты, переданные пользователем через форму обратной связи.</p>
+              <p><strong className="text-white">3. Цели обработки</strong><br/>Персональные данные обрабатываются в целях: связи с пользователем, оформления заказа, предоставления информации об услугах и специальных предложениях BOGATOV TRAVEL.</p>
+              <p><strong className="text-white">4. Передача третьим лицам</strong><br/>Оператор не передаёт персональные данные третьим лицам без согласия субъекта, за исключением случаев, предусмотренных законодательством РФ.</p>
+              <p><strong className="text-white">5. Хранение данных</strong><br/>Персональные данные хранятся в течение срока, необходимого для достижения целей обработки, либо до момента отзыва согласия субъектом персональных данных.</p>
+              <p><strong className="text-white">6. Права пользователя</strong><br/>Вы вправе в любое время отозвать согласие на обработку персональных данных, направив запрос по адресу: <a href={`mailto:${EMAIL}`} style={{ color: "#d79a57" }}>{EMAIL}</a>.</p>
+              <p><strong className="text-white">7. Контакты</strong><br/>По вопросам обработки персональных данных обращайтесь: {PHONE} / <a href={`mailto:${EMAIL}`} style={{ color: "#d79a57" }}>{EMAIL}</a></p>
+            </div>
+            <div className="px-8 py-5 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              <button onClick={() => setShowPrivacy(false)} className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300" style={{ background: "#d79a57", color: "#160f07" }}>Понятно</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* МОДАЛЬНОЕ ОКНО — Согласие на обработку персональных данных */}
+      {showConsent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }} onClick={() => setShowConsent(false)}>
+          <div className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl overflow-hidden flex flex-col" style={{ background: "#0d0d0d", border: "1px solid rgba(215,154,87,0.25)" }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-8 py-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+              <h2 className="font-cormorant text-2xl text-white">Согласие на обработку данных</h2>
+              <button onClick={() => setShowConsent(false)} className="w-9 h-9 rounded-full flex items-center justify-center transition-all" style={{ border: "1px solid rgba(255,255,255,0.1)", color: "#888" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(215,154,87,0.4)"; e.currentTarget.style.color = "#d79a57"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#888"; }}>
+                <Icon name="X" size={16} />
+              </button>
+            </div>
+            <div className="overflow-y-auto px-8 py-6 space-y-5 font-montserrat text-sm leading-relaxed" style={{ color: "#aaa" }}>
+              <p style={{ color: "#d79a57" }} className="font-semibold text-base">Согласие субъекта персональных данных</p>
+              <p>Я, субъект персональных данных, в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных», свободно, своей волей и в своём интересе даю согласие Оператору — BOGATOV TRAVEL — на обработку моих персональных данных.</p>
+              <p><strong className="text-white">Перечень персональных данных:</strong><br/>Фамилия, имя; номер телефона; адрес электронной почты.</p>
+              <p><strong className="text-white">Цели обработки:</strong><br/>Обратная связь, консультирование по услугам, оформление заявки на тур, информирование о специальных предложениях.</p>
+              <p><strong className="text-white">Действия с персональными данными:</strong><br/>Сбор, запись, систематизация, накопление, хранение, уточнение, использование, передача (при наличии правовых оснований), удаление, уничтожение.</p>
+              <p><strong className="text-white">Срок действия согласия:</strong><br/>Согласие действует с момента его предоставления и до момента отзыва субъектом персональных данных путём направления письменного заявления Оператору.</p>
+              <p><strong className="text-white">Отзыв согласия:</strong><br/>Я имею право отозвать настоящее согласие, направив соответствующий запрос на электронную почту: <a href={`mailto:${EMAIL}`} style={{ color: "#d79a57" }}>{EMAIL}</a> или по телефону: {PHONE}.</p>
+            </div>
+            <div className="px-8 py-5 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              <button onClick={() => { setShowConsent(false); setAgreed(true); }} className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300" style={{ background: "#d79a57", color: "#160f07" }}>Согласен(а)</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* FOOTER */}
       <footer className="py-10 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
