@@ -400,6 +400,13 @@ export default function Index() {
     return () => clearInterval(t);
   }, [clubRef.inView]);
 
+  const [parallaxY, setParallaxY] = useState(0);
+  useEffect(() => {
+    const fn = () => setParallaxY(window.scrollY * 0.4);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
   const gold = "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)";
   const goldText = { background: gold, WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent" as const };
 
@@ -449,7 +456,7 @@ export default function Index() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={IMG_ACTION} alt="Квадротур" className="w-full h-full object-cover" style={{ opacity: 0.22, filter: "grayscale(30%)", transform: "scale(1.05)" }} />
+          <img src={IMG_ACTION} alt="Квадротур" className="w-full h-full object-cover" style={{ opacity: 0.22, filter: "grayscale(30%)", transform: `scale(1.15) translateY(${parallaxY}px)`, willChange: "transform" }} />
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.8) 100%)" }} />
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, rgba(215,154,87,0.07) 0%, transparent 65%)" }} />
         </div>
