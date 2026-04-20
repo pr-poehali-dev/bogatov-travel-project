@@ -454,6 +454,9 @@ export default function Index() {
                 {item.label}
               </a>
             ))}
+            <a href="#contact" onClick={() => setMenuOpen(false)} className="gold-btn block text-center mt-2">
+              Забронировать
+            </a>
           </div>
         )}
       </nav>
