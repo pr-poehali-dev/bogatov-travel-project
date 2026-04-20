@@ -95,6 +95,8 @@ const GALLERY = [
   { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/dd3848dd-561e-4b3e-b958-4bf39feefbb7.jpeg", label: "В листьях" },
   { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/56cbc54d-af08-4d38-9b3b-66bdd49c557d.jpeg", label: "На квадре над морем" },
   { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/1da772c3-2336-4227-afa9-9077066e40ae.jpeg", label: "Красный квадр у обрыва" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/a2667e7f-0e15-4fab-bbe8-4d11eb3db5e3.jpeg", label: "У замёрзшего озера" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/71de0470-f729-4665-bf1e-fdcff8a5426f.jpeg", label: "Привал с видом на реку" },
 ];
 
 const REVIEWS = [
@@ -513,56 +515,64 @@ function MapQuads() {
 }
 
 function GallerySlider() {
-  const [current, setCurrent] = useState(0);
   const total = GALLERY.length;
+  const [current, setCurrent] = useState(0);
   const prev = () => setCurrent(i => (i - 1 + total) % total);
   const next = () => setCurrent(i => (i + 1) % total);
 
+  // Автопрокрутка
+  useEffect(() => {
+    const t = setInterval(() => setCurrent(i => (i + 1) % total), 3500);
+    return () => clearInterval(t);
+  }, []);
+
+  // Получаем 3 индекса начиная с current
+  const visible = [0, 1, 2].map(offset => (current + offset) % total);
+
   return (
     <div>
-      {/* Главное фото */}
-      <div className="relative rounded-2xl overflow-hidden mb-4" style={{ background: "#0a0a0a" }}>
-        <img
-          key={current}
-          src={GALLERY[current].img}
-          alt={GALLERY[current].label}
-          className="w-full object-contain"
-          style={{ maxHeight: "70vh", minHeight: "320px" }}
-        />
-        {/* Подпись */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-4" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75), transparent)" }}>
-          <span className="font-cormorant text-white text-2xl">{GALLERY[current].label}</span>
+      {/* Карусель — 3 фото */}
+      <div className="relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {visible.map((idx, pos) => (
+            <div key={idx} className="relative rounded-2xl overflow-hidden"
+              style={{ height: "320px", border: pos === 0 ? "2px solid rgba(215,154,87,0.5)" : "2px solid rgba(215,154,87,0.15)" }}>
+              <img
+                src={GALLERY[idx].img}
+                alt={GALLERY[idx].label}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 px-4 py-3"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)" }}>
+                <span className="font-cormorant text-white text-lg">{GALLERY[idx].label}</span>
+              </div>
+            </div>
+          ))}
         </div>
+
         {/* Стрелки */}
         <button onClick={prev}
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(10,8,4,0.7)", border: "1px solid rgba(215,154,87,0.3)" }}>
+          className="absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center z-10"
+          style={{ background: "rgba(10,8,4,0.85)", border: "1px solid rgba(215,154,87,0.4)" }}>
           <Icon name="ChevronLeft" size={20} style={{ color: "#d79a57" } as React.CSSProperties} />
         </button>
         <button onClick={next}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(10,8,4,0.7)", border: "1px solid rgba(215,154,87,0.3)" }}>
+          className="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center z-10"
+          style={{ background: "rgba(10,8,4,0.85)", border: "1px solid rgba(215,154,87,0.4)" }}>
           <Icon name="ChevronRight" size={20} style={{ color: "#d79a57" } as React.CSSProperties} />
         </button>
-        {/* Счётчик */}
-        <div className="absolute top-3 right-3 px-3 py-1 rounded-full font-montserrat text-xs"
-          style={{ background: "rgba(10,8,4,0.7)", color: "#d79a57", border: "1px solid rgba(215,154,87,0.2)" }}>
-          {current + 1} / {total}
-        </div>
       </div>
 
-      {/* Миниатюры */}
-      <div className="flex gap-3 justify-center flex-wrap">
-        {GALLERY.map((item, i) => (
+      {/* Точки-индикаторы */}
+      <div className="flex gap-2 justify-center mt-2">
+        {GALLERY.map((_, i) => (
           <button key={i} onClick={() => setCurrent(i)}
-            className="rounded-xl overflow-hidden flex-shrink-0"
+            className="rounded-full transition-all duration-300"
             style={{
-              width: "72px", height: "72px",
-              border: i === current ? "2px solid #d79a57" : "2px solid transparent",
-              opacity: i === current ? 1 : 0.5,
-            }}>
-            <img src={item.img} alt={item.label} className="w-full h-full object-cover" />
-          </button>
+              width: i === current ? "24px" : "8px",
+              height: "8px",
+              background: i === current ? "#d79a57" : "rgba(215,154,87,0.25)",
+            }} />
         ))}
       </div>
     </div>
