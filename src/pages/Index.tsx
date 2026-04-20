@@ -460,8 +460,8 @@ export default function Index() {
         style={{ background: scrolled ? "rgba(5,5,5,0.92)" : "transparent", borderBottom: scrolled ? "1px solid rgba(215,154,87,0.1)" : "none" }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center gap-3 group">
-            <img src={LOGO_URL} alt="BOGATOV TRAVEL" className="h-10 w-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-110" style={{ filter: "drop-shadow(0 0 8px rgba(215,154,87,0.4))" }} />
-            <span className="font-cormorant text-2xl tracking-widest font-semibold hidden sm:block" style={goldText}>BOGATOV TRAVEL</span>
+            <img src={LOGO_URL} alt="БОГАТОВ" className="h-10 w-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-110" style={{ filter: "drop-shadow(0 0 8px rgba(215,154,87,0.4))" }} />
+            <span className="font-cormorant text-2xl tracking-widest font-semibold hidden sm:block" style={goldText}>БОГАТОВ</span>
           </a>
           <div className="hidden md:flex items-center gap-7">
             {NAV_ITEMS.map(item => (
@@ -572,7 +572,7 @@ export default function Index() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
-              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Почему BOGATOV TRAVEL</span>
+              <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Почему БОГАТОВ</span>
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
             </div>
             <h2 className="font-cormorant text-white mb-4" style={{ fontSize: "clamp(32px,5vw,54px)" }}>
@@ -1389,13 +1389,13 @@ export default function Index() {
           {/* Логотип + заголовок */}
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="relative">
-              <img src={LOGO_URL} alt="BOGATOV TRAVEL" className="h-14 w-14 rounded-full object-cover" style={{ filter: "drop-shadow(0 0 12px rgba(215,154,87,0.5))", border: "2px solid rgba(215,154,87,0.4)" }} />
+              <img src={LOGO_URL} alt="БОГАТОВ" className="h-14 w-14 rounded-full object-cover" style={{ filter: "drop-shadow(0 0 12px rgba(215,154,87,0.5))", border: "2px solid rgba(215,154,87,0.4)" }} />
               <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs" style={{ background: "#d79a57", color: "#160f07" }}>
                 <Icon name="Crown" size={11} />
               </div>
             </div>
             <div className="text-left">
-              <div className="font-cormorant text-sm uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.6)" }}>BOGATOV TRAVEL</div>
+              <div className="font-cormorant text-sm uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.6)" }}>БОГАТОВ</div>
               <div className="font-cormorant text-3xl md:text-4xl font-bold tracking-widest" style={{ background: "linear-gradient(135deg, #d79a57, #f1c98a, #d79a57)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>ELITE CLUB</div>
             </div>
           </div>
@@ -1508,10 +1508,10 @@ export default function Index() {
               </button>
             </div>
             <div className="overflow-y-auto px-8 py-6 space-y-5 font-montserrat text-sm leading-relaxed" style={{ color: "#aaa" }}>
-              <p style={{ color: "#d79a57" }} className="font-semibold text-base">BOGATOV TRAVEL — Политика конфиденциальности</p>
-              <p><strong className="text-white">1. Общие положения</strong><br/>Настоящая политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта BOGATOV TRAVEL (далее — Оператор).</p>
+              <p style={{ color: "#d79a57" }} className="font-semibold text-base">БОГАТОВ — Политика конфиденциальности</p>
+              <p><strong className="text-white">1. Общие положения</strong><br/>Настоящая политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта БОГАТОВ (далее — Оператор).</p>
               <p><strong className="text-white">2. Состав персональных данных</strong><br/>Оператор обрабатывает следующие персональные данные: имя, номер телефона, адрес электронной почты, переданные пользователем через форму обратной связи.</p>
-              <p><strong className="text-white">3. Цели обработки</strong><br/>Персональные данные обрабатываются в целях: связи с пользователем, оформления заказа, предоставления информации об услугах и специальных предложениях BOGATOV TRAVEL.</p>
+              <p><strong className="text-white">3. Цели обработки</strong><br/>Персональные данные обрабатываются в целях: связи с пользователем, оформления заказа, предоставления информации об услугах и специальных предложениях БОГАТОВ.</p>
               <p><strong className="text-white">4. Передача третьим лицам</strong><br/>Оператор не передаёт персональные данные третьим лицам без согласия субъекта, за исключением случаев, предусмотренных законодательством РФ.</p>
               <p><strong className="text-white">5. Хранение данных</strong><br/>Персональные данные хранятся в течение срока, необходимого для достижения целей обработки, либо до момента отзыва согласия субъектом персональных данных.</p>
               <p><strong className="text-white">6. Права пользователя</strong><br/>Вы вправе в любое время отозвать согласие на обработку персональных данных, направив запрос по адресу: <a href={`mailto:${EMAIL}`} style={{ color: "#d79a57" }}>{EMAIL}</a>.</p>
@@ -1538,7 +1538,7 @@ export default function Index() {
             </div>
             <div className="overflow-y-auto px-8 py-6 space-y-5 font-montserrat text-sm leading-relaxed" style={{ color: "#aaa" }}>
               <p style={{ color: "#d79a57" }} className="font-semibold text-base">Согласие субъекта персональных данных</p>
-              <p>Я, субъект персональных данных, в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных», свободно, своей волей и в своём интересе даю согласие Оператору — BOGATOV TRAVEL — на обработку моих персональных данных.</p>
+              <p>Я, субъект персональных данных, в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных», свободно, своей волей и в своём интересе даю согласие Оператору — БОГАТОВ — на обработку моих персональных данных.</p>
               <p><strong className="text-white">Перечень персональных данных:</strong><br/>Фамилия, имя; номер телефона; адрес электронной почты.</p>
               <p><strong className="text-white">Цели обработки:</strong><br/>Обратная связь, консультирование по услугам, оформление заявки на тур, информирование о специальных предложениях.</p>
               <p><strong className="text-white">Действия с персональными данными:</strong><br/>Сбор, запись, систематизация, накопление, хранение, уточнение, использование, передача (при наличии правовых оснований), удаление, уничтожение.</p>
@@ -1555,7 +1555,7 @@ export default function Index() {
       {/* FOOTER */}
       <footer className="py-10 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-cormorant text-xl tracking-widest font-semibold" style={goldText}>BOGATOV TRAVEL</a>
+          <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-cormorant text-xl tracking-widest font-semibold" style={goldText}>БОГАТОВ</a>
           <div className="flex flex-wrap justify-center gap-5">
             <a href={`tel:${PHONE_RAW}`} className="font-montserrat text-xs transition-colors" style={{ color: "#666" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
@@ -1570,7 +1570,7 @@ export default function Index() {
               onMouseEnter={e => (e.currentTarget.style.color = "#d79a57")}
               onMouseLeave={e => (e.currentTarget.style.color = "#666")}>{EMAIL}</a>
           </div>
-          <div className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#444" }}>© 2026 BOGATOV TRAVEL</div>
+          <div className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#444" }}>© 2026 БОГАТОВ</div>
         </div>
       </footer>
     </div>
