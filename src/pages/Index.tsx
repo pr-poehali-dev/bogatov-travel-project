@@ -515,8 +515,7 @@ export default function Index() {
           </div>
 
           <h1 className="font-cormorant leading-none mb-4" style={{ fontSize: "clamp(60px,10vw,110px)" }}>
-            <span className="block text-white">BOGATOV</span>
-            <span className="block" style={goldText}>TRAVEL</span>
+            <span className="block" style={goldText}>БОГАТОВ</span>
           </h1>
 
           <p className="font-montserrat max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "#e8ddc9", fontSize: "clamp(15px,1.8vw,19px)" }}>
