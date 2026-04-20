@@ -1628,7 +1628,7 @@ export default function Index() {
               perspective: "800px",
             }}>
               <img
-                src="https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/9764186a-eef7-4acd-8ce5-5b8bb724ab4b.jpg"
+                src="https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/67d06abe-e662-412e-b051-4a20943f4d64.jpg"
                 alt="Quad bike"
                 style={{ width: "100%", borderRadius: "12px", filter: "drop-shadow(0 0 16px rgba(215,154,87,0.35)) saturate(0.85) brightness(0.9)" }}
               />
