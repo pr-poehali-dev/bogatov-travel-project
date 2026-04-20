@@ -597,11 +597,65 @@ export default function Index() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  // Курсор-квадроцикл
+  const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const [cursorAngle, setCursorAngle] = useState(0);
+  const prevCursor = useRef({ x: -100, y: -100 });
+  useEffect(() => {
+    const fn = (e: MouseEvent) => {
+      const dx = e.clientX - prevCursor.current.x;
+      const dy = e.clientY - prevCursor.current.y;
+      if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+        setCursorAngle(Math.atan2(dy, dx) * 180 / Math.PI);
+      }
+      prevCursor.current = { x: e.clientX, y: e.clientY };
+      setCursor({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", fn);
+    return () => window.removeEventListener("mousemove", fn);
+  }, []);
+
   const gold = "linear-gradient(135deg, #d79a57 0%, #f1c98a 50%, #d79a57 100%)";
   const goldText = { background: gold, WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent" as const };
 
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "radial-gradient(circle at top, rgba(215,154,87,0.1), transparent 35%), linear-gradient(180deg,#020202 0%,#070707 40%,#0b0b0b 100%)", color: "#f3e2bf" }}>
+
+      {/* Курсор-квадроцикл */}
+      <svg
+        style={{
+          position: "fixed",
+          left: cursor.x,
+          top: cursor.y,
+          width: 36,
+          height: 36,
+          pointerEvents: "none",
+          zIndex: 9999,
+          transform: `translate(-50%, -50%) rotate(${cursorAngle}deg)`,
+          transition: "transform 0.08s ease-out",
+          filter: "drop-shadow(0 0 6px rgba(215,154,87,0.7))",
+        }}
+        viewBox="-18 -18 36 36"
+      >
+        {/* Тело */}
+        <rect x="-9" y="-4" width="18" height="8" rx="2.5" fill="#d79a57"/>
+        {/* Деталь — сиденье */}
+        <rect x="-4" y="-6" width="10" height="3" rx="1.5" fill="#c9a84c"/>
+        {/* Колёса */}
+        <circle cx="-7" cy="5" r="3" fill="#111" stroke="#d79a57" strokeWidth="0.8"/>
+        <circle cx="7" cy="5" r="3" fill="#111" stroke="#d79a57" strokeWidth="0.8"/>
+        <circle cx="-7" cy="-5" r="3" fill="#111" stroke="#d79a57" strokeWidth="0.8"/>
+        <circle cx="7" cy="-5" r="3" fill="#111" stroke="#d79a57" strokeWidth="0.8"/>
+        {/* Руль */}
+        <line x1="6" y1="-2" x2="12" y2="-5" stroke="#888" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="10" y1="-7" x2="14" y2="-3" stroke="#d79a57" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Фара */}
+        <circle cx="10" cy="0" r="2" fill="#d79a57" opacity="0.8"/>
+        <circle cx="10" cy="0" r="4" fill="#d79a57" opacity="0.15"/>
+        {/* Пыль */}
+        <circle cx="-12" cy="0" r="2.5" fill="#d79a57" opacity="0.07"/>
+        <circle cx="-15" cy="0" r="1.5" fill="#d79a57" opacity="0.04"/>
+      </svg>
 
       {/* NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "backdrop-blur-md" : ""}`}
