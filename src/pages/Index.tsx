@@ -417,7 +417,7 @@ const QUADS_TOURS = ["Лесная тропа", "Горный маршрут", "
 
 const QUADS_CONFIG = Array.from({length: 5}, (_, i) => ({
   route: MAP_ROUTES[i * 2 % MAP_ROUTES.length],
-  speed: 0.00022 + i * 0.00005,
+  speed: 0.00008 + i * 0.00002, // медленнее
   offset: i * 0.2,
   color: i % 3 === 0 ? "#d79a57" : i % 3 === 1 ? "#f1c98a" : "#c9a84c",
   name: QUADS_NAMES[i],
@@ -427,27 +427,32 @@ const QUADS_CONFIG = Array.from({length: 5}, (_, i) => ({
 function MapQuads() {
   const [tick, setTick] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [tooltipPos, setTooltipPos] = useState({x: 0, y: 0});
+  const smoothPos = useRef(QUADS_CONFIG.map((q) => lerpPt(q.route, q.offset)));
 
   useEffect(() => {
     let id: number;
     let last = performance.now();
     const loop = (now: number) => {
-      setTick(t => t + (now - last));
+      const dt = now - last;
       last = now;
+      setTick(t => t + dt);
       id = requestAnimationFrame(loop);
     };
     id = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const positions = QUADS_CONFIG.map((q) => {
+  const positions = QUADS_CONFIG.map((q, i) => {
     const t = ((q.offset + tick * q.speed) % 1);
-    const pos = lerpPt(q.route, t);
-    const t2 = Math.min(t + 0.02, 0.999);
+    const target = lerpPt(q.route, t);
+    // Плавное следование: lerp текущей позиции к цели
+    const smooth = smoothPos.current[i];
+    smooth.x += (target.x - smooth.x) * 0.04;
+    smooth.y += (target.y - smooth.y) * 0.04;
+    const t2 = Math.min(t + 0.015, 0.999);
     const p2 = lerpPt(q.route, t2);
-    const angle = Math.atan2(p2.y - pos.y, p2.x - pos.x) * 180 / Math.PI;
-    return { ...pos, angle };
+    const angle = Math.atan2(p2.y - smooth.y, p2.x - smooth.x) * 180 / Math.PI;
+    return { x: smooth.x, y: smooth.y, angle };
   });
 
   return (
@@ -463,7 +468,7 @@ function MapQuads() {
             <g
               transform={`translate(${x},${y}) rotate(${angle})`}
               style={{ cursor: "pointer" }}
-              onMouseEnter={() => { setHovered(i); setTooltipPos({x, y}); }}
+              onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
             >
               {/* Зона наведения */}
