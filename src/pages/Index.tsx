@@ -487,14 +487,20 @@ function MapQuads() {
             </g>
 
             {/* Тултип — рендерим вне rotate, чтобы не крутился */}
-            {isHovered && (
-              <g transform={`translate(${tipX},${tipY})`} style={{ pointerEvents: "none" }}>
-                <rect x="0" y="0" width="82" height="38" rx="6"
-                  fill="rgba(10,8,4,0.92)" stroke={q.color} strokeWidth="0.8"/>
-                <text x="8" y="14" fontSize="9" fill={q.color} fontFamily="sans-serif" fontWeight="700">🏍 {q.name}</text>
-                <text x="8" y="27" fontSize="8" fill="rgba(255,255,255,0.7)" fontFamily="sans-serif">{q.tour}</text>
-              </g>
-            )}
+            {isHovered && (() => {
+              const t = ((q.offset + tick * q.speed) % 1);
+              const status = t < 0.15 ? "🟢 Старт" : t < 0.85 ? "🟡 В пути" : "🔴 Финиш";
+              const statusColor = t < 0.15 ? "#4ade80" : t < 0.85 ? "#f1c98a" : "#f87171";
+              return (
+                <g transform={`translate(${tipX},${tipY})`} style={{ pointerEvents: "none" }}>
+                  <rect x="0" y="0" width="90" height="50" rx="6"
+                    fill="rgba(10,8,4,0.94)" stroke={q.color} strokeWidth="0.8"/>
+                  <text x="8" y="14" fontSize="9" fill={q.color} fontFamily="sans-serif" fontWeight="700">🏍 {q.name}</text>
+                  <text x="8" y="27" fontSize="8" fill="rgba(255,255,255,0.65)" fontFamily="sans-serif">{q.tour}</text>
+                  <text x="8" y="42" fontSize="8" fill={statusColor} fontFamily="sans-serif" fontWeight="600">{status}</text>
+                </g>
+              );
+            })()}
           </g>
         );
       })}
