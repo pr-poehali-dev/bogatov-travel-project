@@ -1478,6 +1478,7 @@ export default function Index() {
                       style={{ background: "#111", border: "1px solid #222", caretColor: "#d79a57" }}
                       onFocus={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
                       onBlur={e => (e.currentTarget.style.borderColor = "#222")} />
+                    <p className="font-montserrat text-xs mt-1.5" style={{ color: "rgba(215,154,87,0.5)" }}>Вводите номер корректно, чтобы мы смогли с вами связаться</p>
                   </div>
 
                   {/* Email */}
