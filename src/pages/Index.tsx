@@ -90,12 +90,11 @@ const TOUR_PREMIUM = {
 };
 
 const GALLERY = [
-  { img: IMG_ACTION, label: "Экстремальное бездорожье" },
-  { img: IMG_GROUP, label: "Групповые туры" },
-  { img: IMG_AERIAL, label: "Горные маршруты" },
-  { img: IMG_ACTION, label: "Лесные тропы" },
-  { img: IMG_GROUP, label: "Корпоративные туры" },
-  { img: IMG_AERIAL, label: "Панорамные виды" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/0da3d92b-5e2a-4527-aed1-0dbe5f268f28.jpeg", label: "Вдвоём на одном квадре" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/dd398f24-6260-4813-bbbe-858e0b21f2b6.jpeg", label: "Вид на залив" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/dd3848dd-561e-4b3e-b958-4bf39feefbb7.jpeg", label: "В листьях" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/56cbc54d-af08-4d38-9b3b-66bdd49c557d.jpeg", label: "На квадре над морем" },
+  { img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/1da772c3-2336-4227-afa9-9077066e40ae.jpeg", label: "Красный квадр у обрыва" },
 ];
 
 const REVIEWS = [
