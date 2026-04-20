@@ -408,6 +408,24 @@ export default function Index() {
     rafId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafId);
   }, [ctaRef.inView]);
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  useEffect(() => {
+    const target = new Date("2026-09-15T00:00:00").getTime();
+    const tick = () => {
+      const diff = target - Date.now();
+      if (diff <= 0) { setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return; }
+      setCountdown({
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const t = setInterval(tick, 1000);
+    return () => clearInterval(t);
+  }, []);
+
   const [clubCount, setClubCount] = useState(0);
   useEffect(() => {
     if (!clubRef.inView) return;
@@ -811,6 +829,19 @@ export default function Index() {
           <p className="font-montserrat text-sm mb-10" style={{ color: "#c9b99a" }}>
             Реальная цена твоего тура: всего <strong style={{ color: "#fff" }}>от 6 000 ₽</strong> за 2 часа
           </p>
+
+          <div className="mb-10">
+            <p className="font-montserrat text-xs uppercase tracking-widest mb-5" style={{ color: "#c9b99a" }}>До конца сезона осталось</p>
+            <div className="flex justify-center gap-4">
+              {[{ v: countdown.days, l: "дней" }, { v: countdown.hours, l: "часов" }, { v: countdown.minutes, l: "минут" }, { v: countdown.seconds, l: "секунд" }].map(({ v, l }) => (
+                <div key={l} className="flex flex-col items-center rounded-xl px-4 py-3 min-w-[64px]" style={{ background: "rgba(215,154,87,0.08)", border: "1px solid rgba(215,154,87,0.2)" }}>
+                  <span className="font-cormorant font-bold" style={{ fontSize: "clamp(28px,6vw,48px)", color: "#d79a57", lineHeight: 1 }}>{String(v).padStart(2, "0")}</span>
+                  <span className="font-montserrat text-xs mt-1" style={{ color: "#c9b99a" }}>{l}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <a href="https://t.me/BogatovTravel" target="_blank" rel="noopener noreferrer" className="gold-btn">
             Выбрать формат в Telegram
           </a>
