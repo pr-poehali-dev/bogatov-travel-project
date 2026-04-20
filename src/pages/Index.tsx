@@ -1755,8 +1755,8 @@ export default function Index() {
           <a href="https://t.me/tribute/app?startapp=ep_8xnnxD4PO5tvdncNQetz7QvHr8k4FyRU95MvimJ53kxP80jCVE" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-montserrat text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-105"
             style={{ background: "linear-gradient(45deg, #d79a57, #f1c98a, #d79a57)", color: "#160f07", boxShadow: "0 8px 32px rgba(215,154,87,0.45)" }}>
-            <img src={LOGO_URL} alt="" className="w-6 h-6 rounded-full object-cover" style={{ filter: "brightness(0.3)" }} />
-            Подписаться за 1 500 ₽/мес
+            <img src={LOGO_URL} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ filter: "brightness(0.3)" }} />
+            <span className="text-center leading-tight">Подписаться<br className="sm:hidden" /> за 1 500 ₽/мес</span>
             <Icon name="Play" size={14} />
           </a>
           <p className="mt-4 font-montserrat text-xs" style={{ color: "#555" }}>Оформление через Telegram за 2 минуты</p>
