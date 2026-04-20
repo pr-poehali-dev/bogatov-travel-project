@@ -359,6 +359,75 @@ function ReviewCarousel({ gold }: { gold: string; goldText?: React.CSSProperties
   );
 }
 
+function RoadmapBadges() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const badge1Ref = useRef<HTMLDivElement>(null);
+  const badge2Ref = useRef<HTMLDivElement>(null);
+  const badge3Ref = useRef<HTMLDivElement>(null);
+  const multipliers = [0.2, -0.1, 0.15];
+  const refs = [badge1Ref, badge2Ref, badge3Ref];
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current!.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    refs.forEach((ref, i) => {
+      if (ref.current) {
+        ref.current.style.transform = `translate(${x * 40 * multipliers[i]}px, ${y * 20 * multipliers[i]}px)`;
+      }
+    });
+  };
+
+  const handleMouseLeave = () => {
+    refs.forEach(ref => {
+      if (ref.current) ref.current.style.transform = "translate(0,0)";
+    });
+  };
+
+  const badges = [
+    { emoji: "📱", label: "Бронь в TG", ref: badge1Ref, left: "10%" },
+    { emoji: "🏍️", label: "Квадро-тур", ref: badge2Ref, left: "calc(50% - 60px)" },
+    { emoji: "⭐", label: "Отзыв + фото", ref: badge3Ref, right: "10%" },
+  ];
+
+  return (
+    <div className="mb-14">
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="relative w-full rounded-2xl overflow-hidden cursor-pointer"
+        style={{ height: "220px", background: "linear-gradient(135deg, rgba(215,154,87,0.12) 0%, rgba(215,154,87,0.04) 50%, rgba(215,154,87,0.1) 100%)", border: "1px solid rgba(215,154,87,0.2)" }}
+      >
+        {badges.map(({ emoji, label, ref, left, right }: { emoji: string; label: string; ref: React.RefObject<HTMLDivElement>; left?: string; right?: string }) => (
+          <div
+            key={label}
+            ref={ref}
+            className="absolute top-1/2 flex flex-col items-center justify-center rounded-full font-bold select-none"
+            style={{
+              left, right,
+              transform: "translate(0,0)",
+              marginTop: "-60px",
+              width: "120px", height: "120px",
+              background: "rgba(215,154,87,0.12)",
+              border: "1px solid rgba(215,154,87,0.35)",
+              backdropFilter: "blur(8px)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+              transition: "transform 0.12s ease-out",
+            }}
+          >
+            <span style={{ fontSize: "2em" }}>{emoji}</span>
+            <span className="font-montserrat text-xs mt-1 text-center px-2" style={{ color: "#d79a57" }}>{label}</span>
+          </div>
+        ))}
+        <div className="absolute inset-0 flex items-end justify-center pb-4">
+          <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "rgba(215,154,87,0.4)" }}>Наведи мышку — почувствуй движение</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const SEND_URL = "https://functions.poehali.dev/0cb2f075-e960-4742-a4b6-77150edc6ef8";
 const PHONE = "+7 (999) 104-66-66";
 const PHONE_RAW = "+79991046666";
@@ -866,6 +935,9 @@ export default function Index() {
               3 года. 7 городов. Один путь — стать лучшим приключением Дальнего Востока
             </p>
           </div>
+
+          {/* Интерактивные шаги тура */}
+          <RoadmapBadges />
 
           {/* Карта + города */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
