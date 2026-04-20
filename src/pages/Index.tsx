@@ -498,47 +498,7 @@ export default function Index() {
         )}
       </nav>
 
-      {/* QUAD HERO */}
-      <section className="relative overflow-hidden" style={{ minHeight: "100vh", padding: "40px 20px", background: "#050505", color: "#fff" }}>
-        {/* Сетка */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(215,154,87,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,154,87,0.06) 1px,transparent 1px)", backgroundSize: "56px 56px", opacity: 0.4 }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center" style={{ minHeight: "calc(100vh - 80px)" }}>
-          <div>
-            <div className="font-montserrat mb-5" style={{ color: "#d79a57", letterSpacing: "0.22em", fontSize: "13px" }}>&gt;&gt; ХВАТИТ ДИВАНА. ВРЕМЯ КВАДРОТУРА.</div>
-            <h1 className="font-cormorant text-white" style={{ margin: 0, fontSize: "clamp(54px,8vw,112px)", lineHeight: 0.92, fontWeight: 900, textTransform: "uppercase" }}>
-              КВАДРОВЫЙ<br />
-              <span style={{ color: "#d79a57", textShadow: "0 0 18px rgba(215,154,87,0.6)" }}>РАЗРЫВ</span><br />
-              ШАБЛОНОВ.
-            </h1>
-            <div className="font-montserrat" style={{ marginTop: "22px", fontSize: "clamp(16px,2.2vw,28px)", fontWeight: 800, color: "#c9b99a", textTransform: "uppercase" }}>
-              ЗАМЕНИ РУТИНУ НА ЛЕС, ГРЯЗЬ И АДРЕНАЛИН ЗА 48 ЧАСОВ.
-            </div>
-            <p className="font-montserrat" style={{ maxWidth: "720px", marginTop: "18px", fontSize: "17px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-              Активный отдых для компании, пары или выезда с друзьями. Живой маршрут, сильные эмоции и красивый визуал.
-            </p>
-            <a href="#tours" className="gold-btn" style={{ display: "inline-block", marginTop: "28px" }}>
-              [ ВЫБРАТЬ МАРШРУТ ]
-            </a>
-          </div>
-
-          <div style={{ justifySelf: "center", width: "min(100%, 330px)", aspectRatio: "0.72/1", padding: "24px", borderRadius: "24px", border: "1px solid rgba(215,154,87,0.35)", background: "linear-gradient(180deg,rgba(18,18,22,0.92),rgba(7,16,27,0.94))", boxShadow: "0 0 40px rgba(215,154,87,0.15)", animation: "qhFloat 5s ease-in-out infinite" }}>
-            <div style={{ fontSize: "110px", lineHeight: 1, textAlign: "center", filter: "drop-shadow(0 0 16px rgba(215,154,87,0.4))", marginTop: "46px" }}>🏍️</div>
-            <div className="font-cormorant text-white" style={{ marginTop: "20px", textAlign: "center", fontSize: "28px", fontWeight: 900, letterSpacing: "0.16em" }}>QUAD RIDE</div>
-            <div className="font-montserrat" style={{ marginTop: "12px", textAlign: "center", color: "#d79a57", letterSpacing: "0.18em", fontSize: "12px" }}>ЛЕС • ГРЯЗЬ • ВИДЫ</div>
-          </div>
-        </div>
-
-        <style>{`
-          @keyframes qhFloat {
-            0%,100% { transform: translateY(0) rotateY(-4deg); }
-            50% { transform: translateY(-10px) rotateY(4deg); }
-          }
-          @media (max-width: 1024px) {
-            .qh-wrap-inner { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
-      </section>
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -1359,6 +1319,118 @@ export default function Index() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* QUAD HERO */}
+      <section className="relative overflow-hidden" style={{ minHeight: "100vh", padding: "80px 20px", background: "#050505", color: "#fff" }}>
+        <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(215,154,87,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,154,87,0.06) 1px,transparent 1px)", backgroundSize: "56px 56px", opacity: 0.4 }} />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 60% 50% at 70% 50%, rgba(215,154,87,0.07), transparent 70%)" }} />
+
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center" style={{ minHeight: "calc(100vh - 160px)" }}>
+          <div>
+            <div className="font-montserrat mb-5" style={{ color: "#d79a57", letterSpacing: "0.22em", fontSize: "13px" }}>&gt;&gt; ХВАТИТ ДИВАНА. ВРЕМЯ КВАДРОТУРА.</div>
+            <h2 className="font-cormorant text-white" style={{ margin: 0, fontSize: "clamp(54px,8vw,112px)", lineHeight: 0.92, fontWeight: 900, textTransform: "uppercase" }}>
+              КВАДРОВЫЙ<br />
+              <span style={{ color: "#d79a57", textShadow: "0 0 18px rgba(215,154,87,0.6)" }}>РАЗРЫВ</span><br />
+              ШАБЛОНОВ.
+            </h2>
+            <div className="font-montserrat" style={{ marginTop: "22px", fontSize: "clamp(16px,2.2vw,26px)", fontWeight: 800, color: "#c9b99a", textTransform: "uppercase" }}>
+              ЗАМЕНИ РУТИНУ НА ЛЕС, ГРЯЗЬ И АДРЕНАЛИН.
+            </div>
+            <p className="font-montserrat" style={{ maxWidth: "620px", marginTop: "18px", fontSize: "17px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)" }}>
+              Активный отдых для компании, пары или выезда с друзьями. Живой маршрут, сильные эмоции и красивый визуал.
+            </p>
+            <a href="#tours" className="gold-btn" style={{ display: "inline-block", marginTop: "32px" }}>
+              [ ВЫБРАТЬ МАРШРУТ ]
+            </a>
+          </div>
+
+          {/* Карточка с SVG квадроциклом */}
+          <div className="flex justify-center">
+            <div style={{
+              width: "min(100%, 320px)",
+              aspectRatio: "0.72/1",
+              padding: "28px 20px 20px",
+              borderRadius: "24px",
+              border: "1px solid rgba(215,154,87,0.35)",
+              background: "linear-gradient(180deg,rgba(20,14,5,0.95),rgba(7,5,2,0.98))",
+              boxShadow: "0 0 60px rgba(215,154,87,0.15), inset 0 0 40px rgba(215,154,87,0.03)",
+              animation: "qhSpin 12s linear infinite",
+              transformStyle: "preserve-3d",
+              perspective: "800px",
+            }}>
+              {/* SVG квадроцикл */}
+              <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", filter: "drop-shadow(0 0 12px rgba(215,154,87,0.3))" }}>
+                {/* Задние колёса */}
+                <circle cx="60" cy="155" r="32" fill="#111" stroke="#3a2e1a" strokeWidth="3"/>
+                <circle cx="60" cy="155" r="22" fill="#0a0a0a" stroke="#d79a57" strokeWidth="1.5"/>
+                <circle cx="60" cy="155" r="8" fill="#d79a57" opacity="0.7"/>
+                <line x1="60" y1="133" x2="60" y2="177" stroke="#d79a57" strokeWidth="1" opacity="0.5"/>
+                <line x1="38" y1="155" x2="82" y2="155" stroke="#d79a57" strokeWidth="1" opacity="0.5"/>
+
+                {/* Передние колёса */}
+                <circle cx="220" cy="155" r="32" fill="#111" stroke="#3a2e1a" strokeWidth="3"/>
+                <circle cx="220" cy="155" r="22" fill="#0a0a0a" stroke="#d79a57" strokeWidth="1.5"/>
+                <circle cx="220" cy="155" r="8" fill="#d79a57" opacity="0.7"/>
+                <line x1="220" y1="133" x2="220" y2="177" stroke="#d79a57" strokeWidth="1" opacity="0.5"/>
+                <line x1="198" y1="155" x2="242" y2="155" stroke="#d79a57" strokeWidth="1" opacity="0.5"/>
+
+                {/* Рама */}
+                <path d="M 60 128 L 80 90 L 180 85 L 220 128" fill="none" stroke="#c9a84c" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M 80 90 L 100 60 L 185 55 L 200 85" fill="none" stroke="#c9a84c" strokeWidth="2" opacity="0.6"/>
+
+                {/* Кузов */}
+                <path d="M 75 125 L 88 82 L 195 78 L 215 125 L 180 130 L 100 130 Z" fill="#1a1208" stroke="#d79a57" strokeWidth="1.5"/>
+                {/* Деревянные вставки */}
+                <rect x="95" y="88" width="35" height="18" rx="3" fill="#2a1a08" stroke="#c9a84c" strokeWidth="1" opacity="0.8"/>
+                <rect x="152" y="88" width="35" height="18" rx="3" fill="#2a1a08" stroke="#c9a84c" strokeWidth="1" opacity="0.8"/>
+                <line x1="100" y1="93" x2="125" y2="93" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="100" y1="98" x2="125" y2="98" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="157" y1="93" x2="182" y2="93" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="157" y1="98" x2="182" y2="98" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+
+                {/* Сиденье */}
+                <path d="M 105 80 L 178 75 L 182 68 L 108 72 Z" fill="#2c1a0e" stroke="#c9a84c" strokeWidth="1"/>
+
+                {/* Руль */}
+                <path d="M 185 55 L 210 38 M 195 55 L 218 42" stroke="#888" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M 205 35 L 222 40" stroke="#d79a57" strokeWidth="3" strokeLinecap="round"/>
+
+                {/* Фара */}
+                <ellipse cx="213" cy="100" rx="10" ry="7" fill="#1a1208" stroke="#d79a57" strokeWidth="1.5"/>
+                <ellipse cx="213" cy="100" rx="5" ry="3.5" fill="#d79a57" opacity="0.4"/>
+
+                {/* Якорь на корпусе */}
+                <text x="140" y="118" textAnchor="middle" fontSize="14" fill="#d79a57" opacity="0.6" fontFamily="serif">⚓</text>
+
+                {/* Амортизаторы */}
+                <line x1="195" y1="128" x2="210" y2="125" stroke="#888" strokeWidth="2"/>
+                <line x1="75" y1="128" x2="65" y2="125" stroke="#888" strokeWidth="2"/>
+
+                {/* Багажник сзади */}
+                <rect x="52" y="72" width="36" height="12" rx="2" fill="#1a1208" stroke="#c9a84c" strokeWidth="1"/>
+                <line x1="58" y1="72" x2="58" y2="84" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="64" y1="72" x2="64" y2="84" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="70" y1="72" x2="70" y2="84" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="76" y1="72" x2="76" y2="84" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+                <line x1="82" y1="72" x2="82" y2="84" stroke="#c9a84c" strokeWidth="0.8" opacity="0.5"/>
+
+                {/* Свечение под квадром */}
+                <ellipse cx="140" cy="185" rx="80" ry="8" fill="rgba(215,154,87,0.08)"/>
+              </svg>
+
+              <div className="font-cormorant text-white text-center" style={{ marginTop: "12px", fontSize: "22px", fontWeight: 900, letterSpacing: "0.16em" }}>QUAD RIDE</div>
+              <div className="font-montserrat text-center" style={{ marginTop: "8px", color: "#d79a57", letterSpacing: "0.18em", fontSize: "11px" }}>ЛЕС • ГРЯЗЬ • ВИДЫ</div>
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes qhSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+          }
+        `}</style>
       </section>
 
       {/* ELITE CLUB */}
