@@ -498,6 +498,48 @@ export default function Index() {
         )}
       </nav>
 
+      {/* QUAD HERO */}
+      <section className="relative overflow-hidden" style={{ minHeight: "100vh", padding: "40px 20px", background: "#050505", color: "#fff" }}>
+        {/* Сетка */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(215,154,87,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(215,154,87,0.06) 1px,transparent 1px)", backgroundSize: "56px 56px", opacity: 0.4 }} />
+
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center" style={{ minHeight: "calc(100vh - 80px)" }}>
+          <div>
+            <div className="font-montserrat mb-5" style={{ color: "#d79a57", letterSpacing: "0.22em", fontSize: "13px" }}>&gt;&gt; ХВАТИТ ДИВАНА. ВРЕМЯ КВАДРОТУРА.</div>
+            <h1 className="font-cormorant text-white" style={{ margin: 0, fontSize: "clamp(54px,8vw,112px)", lineHeight: 0.92, fontWeight: 900, textTransform: "uppercase" }}>
+              КВАДРОВЫЙ<br />
+              <span style={{ color: "#d79a57", textShadow: "0 0 18px rgba(215,154,87,0.6)" }}>РАЗРЫВ</span><br />
+              ШАБЛОНОВ.
+            </h1>
+            <div className="font-montserrat" style={{ marginTop: "22px", fontSize: "clamp(16px,2.2vw,28px)", fontWeight: 800, color: "#c9b99a", textTransform: "uppercase" }}>
+              ЗАМЕНИ РУТИНУ НА ЛЕС, ГРЯЗЬ И АДРЕНАЛИН ЗА 48 ЧАСОВ.
+            </div>
+            <p className="font-montserrat" style={{ maxWidth: "720px", marginTop: "18px", fontSize: "17px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+              Активный отдых для компании, пары или выезда с друзьями. Живой маршрут, сильные эмоции и красивый визуал.
+            </p>
+            <a href="#tours" className="gold-btn" style={{ display: "inline-block", marginTop: "28px" }}>
+              [ ВЫБРАТЬ МАРШРУТ ]
+            </a>
+          </div>
+
+          <div style={{ justifySelf: "center", width: "min(100%, 330px)", aspectRatio: "0.72/1", padding: "24px", borderRadius: "24px", border: "1px solid rgba(215,154,87,0.35)", background: "linear-gradient(180deg,rgba(18,18,22,0.92),rgba(7,16,27,0.94))", boxShadow: "0 0 40px rgba(215,154,87,0.15)", animation: "qhFloat 5s ease-in-out infinite" }}>
+            <div style={{ fontSize: "110px", lineHeight: 1, textAlign: "center", filter: "drop-shadow(0 0 16px rgba(215,154,87,0.4))", marginTop: "46px" }}>🏍️</div>
+            <div className="font-cormorant text-white" style={{ marginTop: "20px", textAlign: "center", fontSize: "28px", fontWeight: 900, letterSpacing: "0.16em" }}>QUAD RIDE</div>
+            <div className="font-montserrat" style={{ marginTop: "12px", textAlign: "center", color: "#d79a57", letterSpacing: "0.18em", fontSize: "12px" }}>ЛЕС • ГРЯЗЬ • ВИДЫ</div>
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes qhFloat {
+            0%,100% { transform: translateY(0) rotateY(-4deg); }
+            50% { transform: translateY(-10px) rotateY(4deg); }
+          }
+          @media (max-width: 1024px) {
+            .qh-wrap-inner { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+      </section>
+
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
