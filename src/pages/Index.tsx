@@ -827,7 +827,7 @@ export default function Index() {
             <span className="font-cormorant font-bold" style={{ fontSize: "clamp(48px,10vw,96px)", color: "#d79a57", textShadow: "0 0 30px rgba(215,154,87,0.4)" }}>{ctaCounter}</span>
           </div>
           <p className="font-montserrat text-sm mb-10" style={{ color: "#c9b99a" }}>
-            Реальная цена твоего тура: всего <strong style={{ color: "#fff" }}>от 6 000 ₽</strong> за 2 часа
+            Реальная цена твоего тура: всего <strong style={{ color: "#fff" }}>от 6 000 ₽</strong> за час
           </p>
 
           <div className="mb-10">
