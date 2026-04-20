@@ -360,6 +360,96 @@ function ReviewCarousel({ gold }: { gold: string; goldText?: React.CSSProperties
 }
 
 
+// Маршруты по карте (координаты SVG viewBox 0 0 400 520)
+const MAP_ROUTES = [
+  // Находка → Волчанец
+  [{x:278,y:400},{x:290,y:370},{x:290,y:310}],
+  [{x:290,y:310},{x:284,y:355},{x:278,y:400}],
+  // Находка → Фокино
+  [{x:278,y:400},{x:250,y:420},{x:225,y:440}],
+  [{x:225,y:440},{x:252,y:420},{x:278,y:400}],
+  // Волчанец → Уссурийск
+  [{x:290,y:310},{x:240,y:270},{x:175,y:230}],
+  [{x:175,y:230},{x:230,y:268},{x:290,y:310}],
+  // Находка → Владивосток
+  [{x:278,y:400},{x:240,y:436},{x:200,y:472}],
+  [{x:200,y:472},{x:238,y:436},{x:278,y:400}],
+  // Находка → Большой Камень
+  [{x:278,y:400},{x:290,y:382},{x:298,y:365}],
+  [{x:298,y:365},{x:287,y:383},{x:278,y:400}],
+  // Владивосток → Фокино
+  [{x:200,y:472},{x:212,y:456},{x:225,y:440}],
+  [{x:225,y:440},{x:213,y:456},{x:200,y:472}],
+  // Большой Камень → Врангель
+  [{x:298,y:365},{x:303,y:397},{x:308,y:428}],
+  [{x:308,y:428},{x:302,y:396},{x:298,y:365}],
+  // Уссурийск → Волчанец по-другому
+  [{x:175,y:230},{x:220,y:255},{x:260,y:280},{x:290,y:310}],
+  [{x:290,y:310},{x:255,y:282},{x:218,y:256},{x:175,y:230}],
+];
+
+function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
+function lerpPt(pts: {x:number,y:number}[], t: number) {
+  const seg = pts.length - 1;
+  const idx = Math.min(Math.floor(t * seg), seg - 1);
+  const lt = t * seg - idx;
+  return { x: lerp(pts[idx].x, pts[idx+1].x, lt), y: lerp(pts[idx].y, pts[idx+1].y, lt) };
+}
+
+const QUADS_CONFIG = Array.from({length: 30}, (_, i) => ({
+  route: MAP_ROUTES[i % MAP_ROUTES.length],
+  speed: 0.0003 + (i % 7) * 0.00008,
+  offset: (i * 0.033) % 1,
+  color: i % 3 === 0 ? "#d79a57" : i % 3 === 1 ? "#f1c98a" : "#c9a84c",
+  size: 4 + (i % 3),
+}));
+
+function MapQuads() {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    let id: number;
+    let last = performance.now();
+    const loop = (now: number) => {
+      setTick(t => t + (now - last));
+      last = now;
+      id = requestAnimationFrame(loop);
+    };
+    id = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  return (
+    <>
+      {QUADS_CONFIG.map((q, i) => {
+        const t = ((q.offset + tick * q.speed) % 1);
+        const {x, y} = lerpPt(q.route, t);
+        // Направление для поворота
+        const t2 = Math.min(t + 0.02, 0.999);
+        const p2 = lerpPt(q.route, t2);
+        const angle = Math.atan2(p2.y - y, p2.x - x) * 180 / Math.PI;
+        return (
+          <g key={i} transform={`translate(${x},${y}) rotate(${angle})`}>
+            {/* Тело квадроцикла */}
+            <rect x="-5" y="-2.5" width="10" height="5" rx="1.5" fill={q.color} opacity="0.9"/>
+            {/* Колёса */}
+            <circle cx="-4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+            <circle cx="4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+            <circle cx="-4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+            <circle cx="4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+            {/* Руль */}
+            <line x1="3" y1="-1" x2="6" y2="-2.5" stroke="#888" strokeWidth="0.8"/>
+            {/* Фара — свечение */}
+            <circle cx="6" cy="0" r="1.5" fill={q.color} opacity="0.6"/>
+            <circle cx="6" cy="0" r="3" fill={q.color} opacity="0.15"/>
+            {/* Пыль/след */}
+            <circle cx="-7" cy="0" r="2" fill={q.color} opacity="0.08"/>
+          </g>
+        );
+      })}
+    </>
+  );
+}
+
 const SEND_URL = "https://functions.poehali.dev/0cb2f075-e960-4742-a4b6-77150edc6ef8";
 const PHONE = "+7 (999) 104-66-66";
 const PHONE_RAW = "+79991046666";
@@ -997,6 +1087,9 @@ export default function Index() {
                     <line x1="-14" y1="0" x2="14" y2="0" stroke="rgba(215,154,87,0.4)" strokeWidth="0.8" />
                     <text x="-3" y="-18" fontSize="8" fill="rgba(215,154,87,0.7)" fontFamily="sans-serif">С</text>
                   </g>
+
+                  {/* Квадроциклы на маршрутах */}
+                  <MapQuads />
                 </svg>
 
                 {/* Легенда */}
