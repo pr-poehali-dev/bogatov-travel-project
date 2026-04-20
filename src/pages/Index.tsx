@@ -512,6 +512,63 @@ function MapQuads() {
   );
 }
 
+function GallerySlider() {
+  const [current, setCurrent] = useState(0);
+  const total = GALLERY.length;
+  const prev = () => setCurrent(i => (i - 1 + total) % total);
+  const next = () => setCurrent(i => (i + 1) % total);
+
+  return (
+    <div>
+      {/* Главное фото */}
+      <div className="relative rounded-2xl overflow-hidden mb-4" style={{ background: "#0a0a0a" }}>
+        <img
+          key={current}
+          src={GALLERY[current].img}
+          alt={GALLERY[current].label}
+          className="w-full object-contain"
+          style={{ maxHeight: "70vh", minHeight: "320px" }}
+        />
+        {/* Подпись */}
+        <div className="absolute bottom-0 left-0 right-0 px-6 py-4" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75), transparent)" }}>
+          <span className="font-cormorant text-white text-2xl">{GALLERY[current].label}</span>
+        </div>
+        {/* Стрелки */}
+        <button onClick={prev}
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(10,8,4,0.7)", border: "1px solid rgba(215,154,87,0.3)" }}>
+          <Icon name="ChevronLeft" size={20} style={{ color: "#d79a57" } as React.CSSProperties} />
+        </button>
+        <button onClick={next}
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(10,8,4,0.7)", border: "1px solid rgba(215,154,87,0.3)" }}>
+          <Icon name="ChevronRight" size={20} style={{ color: "#d79a57" } as React.CSSProperties} />
+        </button>
+        {/* Счётчик */}
+        <div className="absolute top-3 right-3 px-3 py-1 rounded-full font-montserrat text-xs"
+          style={{ background: "rgba(10,8,4,0.7)", color: "#d79a57", border: "1px solid rgba(215,154,87,0.2)" }}>
+          {current + 1} / {total}
+        </div>
+      </div>
+
+      {/* Миниатюры */}
+      <div className="flex gap-3 justify-center flex-wrap">
+        {GALLERY.map((item, i) => (
+          <button key={i} onClick={() => setCurrent(i)}
+            className="rounded-xl overflow-hidden flex-shrink-0"
+            style={{
+              width: "72px", height: "72px",
+              border: i === current ? "2px solid #d79a57" : "2px solid transparent",
+              opacity: i === current ? 1 : 0.5,
+            }}>
+            <img src={item.img} alt={item.label} className="w-full h-full object-cover" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const SEND_URL = "https://functions.poehali.dev/0cb2f075-e960-4742-a4b6-77150edc6ef8";
 const PHONE = "+7 (999) 104-66-66";
 const PHONE_RAW = "+79991046666";
@@ -958,7 +1015,7 @@ export default function Index() {
 
       {/* GALLERY */}
       <section id="gallery" className="py-28 px-6 relative overflow-hidden" style={{ background: "rgba(255,255,255,0.012)" }}>
-        <div ref={galleryRef.ref} className={`max-w-7xl mx-auto relative transition-all duration-1000 ${galleryRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+        <div ref={galleryRef.ref} className={`max-w-4xl mx-auto relative transition-all duration-1000 ${galleryRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-px" style={{ background: "#d79a57" }} />
@@ -970,34 +1027,7 @@ export default function Index() {
             </h2>
           </div>
 
-          {/* Мобильная галерея — вертикальные карточки с параллаксом */}
-          <div className="flex flex-col gap-5 md:hidden">
-            {GALLERY.map((item, i) => (
-              <div key={i} className="relative overflow-hidden rounded-2xl" style={{ height: "260px" }}>
-                <img src={item.img} alt={item.label}
-                  className="w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)" }} />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <span className="font-cormorant text-white text-2xl">{item.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Десктопная галерея — сетка */}
-          <div className="hidden md:grid md:grid-cols-3 gap-4">
-            {GALLERY.map((item, i) => (
-              <div key={i} className={`group relative overflow-hidden rounded-2xl cursor-pointer ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
-                <img src={item.img} alt={item.label}
-                  className={`w-full object-cover transition-transform duration-700 ${i === 0 ? "h-72 md:h-full" : "h-48 md:h-56"}`}
-                  style={{ transform: `scale(1.12) translateY(${scrollY * (0.03 + i * 0.01)}px)`, willChange: "transform" }} />
-                <div className="absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)" }}>
-                  <span className="font-cormorant text-white text-xl">{item.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <GallerySlider />
         </div>
       </section>
 
