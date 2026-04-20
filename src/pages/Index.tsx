@@ -390,6 +390,24 @@ export default function Index() {
   const reviewsRef = useInView();
   const roadmapRef = useInView();
   const clubRef = useInView();
+  const ctaRef = useInView();
+  const [ctaCounter, setCtaCounter] = useState("500 000 ₽");
+  useEffect(() => {
+    if (!ctaRef.inView) return;
+    const start = 500000, end = 6000, duration = 4000;
+    let startTime: number | null = null;
+    let rafId: number;
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.floor(start + (end - start) * eased);
+      setCtaCounter(value.toLocaleString("ru-RU") + " ₽");
+      if (progress < 1) { rafId = requestAnimationFrame(animate); }
+    };
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [ctaRef.inView]);
   const [clubCount, setClubCount] = useState(0);
   useEffect(() => {
     if (!clubRef.inView) return;
@@ -775,6 +793,27 @@ export default function Index() {
           </div>
 
           <ReviewCarousel gold={gold} goldText={goldText} />
+        </div>
+      </section>
+
+      {/* CTA BANNER */}
+      <section className="py-16 px-6">
+        <div ref={ctaRef.ref} className="max-w-4xl mx-auto rounded-2xl overflow-hidden text-center px-8 py-14" style={{ background: "linear-gradient(135deg, #1a1208 0%, #2a1e0a 50%, #1a1208 100%)", border: "1px solid rgba(215,154,87,0.3)", boxShadow: "0 0 60px rgba(215,154,87,0.1)" }}>
+          <h2 className="font-cormorant text-white mb-4" style={{ fontSize: "clamp(26px,4vw,42px)" }}>
+            Сколько стоит твоё <span style={{ color: "#d79a57" }}>бездействие?</span>
+          </h2>
+          <p className="font-montserrat text-sm uppercase tracking-widest mb-6" style={{ color: "#c9b99a" }}>
+            Упущенное приключение сезона:
+          </p>
+          <div className="mb-6">
+            <span className="font-cormorant font-bold" style={{ fontSize: "clamp(48px,10vw,96px)", color: "#d79a57", textShadow: "0 0 30px rgba(215,154,87,0.4)" }}>{ctaCounter}</span>
+          </div>
+          <p className="font-montserrat text-sm mb-10" style={{ color: "#c9b99a" }}>
+            Реальная цена твоего тура: всего <strong style={{ color: "#fff" }}>от 6 000 ₽</strong> за 2 часа
+          </p>
+          <a href="https://t.me/BogatovTravel" target="_blank" rel="noopener noreferrer" className="gold-btn">
+            Выбрать формат в Telegram
+          </a>
         </div>
       </section>
 
