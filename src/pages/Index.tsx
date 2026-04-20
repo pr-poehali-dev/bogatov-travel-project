@@ -412,15 +412,23 @@ function lerpPt(pts: {x:number,y:number}[], t: number) {
   return { x: lerp(pts[idx].x, pts[idx+1].x, lt), y: lerp(pts[idx].y, pts[idx+1].y, lt) };
 }
 
-const QUADS_CONFIG = Array.from({length: 10}, (_, i) => ({
-  route: MAP_ROUTES[i % MAP_ROUTES.length],
-  speed: 0.00025 + (i % 5) * 0.00006,
-  offset: (i * 0.1) % 1,
+const QUADS_NAMES = ["Алексей", "Дмитрий", "Сергей", "Михаил", "Иван"];
+const QUADS_TOURS = ["Лесная тропа", "Горный маршрут", "Побережье", "Тайга", "Речные броды"];
+
+const QUADS_CONFIG = Array.from({length: 5}, (_, i) => ({
+  route: MAP_ROUTES[i * 2 % MAP_ROUTES.length],
+  speed: 0.00022 + i * 0.00005,
+  offset: i * 0.2,
   color: i % 3 === 0 ? "#d79a57" : i % 3 === 1 ? "#f1c98a" : "#c9a84c",
+  name: QUADS_NAMES[i],
+  tour: QUADS_TOURS[i],
 }));
 
 function MapQuads() {
   const [tick, setTick] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({x: 0, y: 0});
+
   useEffect(() => {
     let id: number;
     let last = performance.now();
@@ -433,31 +441,60 @@ function MapQuads() {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  const positions = QUADS_CONFIG.map((q) => {
+    const t = ((q.offset + tick * q.speed) % 1);
+    const pos = lerpPt(q.route, t);
+    const t2 = Math.min(t + 0.02, 0.999);
+    const p2 = lerpPt(q.route, t2);
+    const angle = Math.atan2(p2.y - pos.y, p2.x - pos.x) * 180 / Math.PI;
+    return { ...pos, angle };
+  });
+
   return (
     <>
       {QUADS_CONFIG.map((q, i) => {
-        const t = ((q.offset + tick * q.speed) % 1);
-        const {x, y} = lerpPt(q.route, t);
-        // Направление для поворота
-        const t2 = Math.min(t + 0.02, 0.999);
-        const p2 = lerpPt(q.route, t2);
-        const angle = Math.atan2(p2.y - y, p2.x - x) * 180 / Math.PI;
+        const { x, y, angle } = positions[i];
+        const isHovered = hovered === i;
+        // Подсказка всегда внутри SVG viewBox
+        const tipX = x > 280 ? x - 85 : x + 12;
+        const tipY = y > 460 ? y - 50 : y - 38;
         return (
-          <g key={i} transform={`translate(${x},${y}) rotate(${angle})`}>
-            {/* Тело квадроцикла */}
-            <rect x="-5" y="-2.5" width="10" height="5" rx="1.5" fill={q.color} opacity="0.9"/>
-            {/* Колёса */}
-            <circle cx="-4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
-            <circle cx="4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
-            <circle cx="-4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
-            <circle cx="4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
-            {/* Руль */}
-            <line x1="3" y1="-1" x2="6" y2="-2.5" stroke="#888" strokeWidth="0.8"/>
-            {/* Фара — свечение */}
-            <circle cx="6" cy="0" r="1.5" fill={q.color} opacity="0.6"/>
-            <circle cx="6" cy="0" r="3" fill={q.color} opacity="0.15"/>
-            {/* Пыль/след */}
-            <circle cx="-7" cy="0" r="2" fill={q.color} opacity="0.08"/>
+          <g key={i}>
+            <g
+              transform={`translate(${x},${y}) rotate(${angle})`}
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => { setHovered(i); setTooltipPos({x, y}); }}
+              onMouseLeave={() => setHovered(null)}
+            >
+              {/* Зона наведения */}
+              <circle cx="0" cy="0" r="10" fill="transparent"/>
+              {/* Свечение при наведении */}
+              {isHovered && <circle cx="0" cy="0" r="12" fill={q.color} opacity="0.15"/>}
+              {/* Тело */}
+              <rect x="-5" y="-2.5" width="10" height="5" rx="1.5" fill={q.color} opacity={isHovered ? 1 : 0.9}/>
+              {/* Колёса */}
+              <circle cx="-4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+              <circle cx="4" cy="3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+              <circle cx="-4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+              <circle cx="4" cy="-3" r="1.8" fill="#1a1208" stroke={q.color} strokeWidth="0.5"/>
+              {/* Руль */}
+              <line x1="3" y1="-1" x2="6" y2="-2.5" stroke="#888" strokeWidth="0.8"/>
+              {/* Фара */}
+              <circle cx="6" cy="0" r="1.5" fill={q.color} opacity="0.7"/>
+              <circle cx="6" cy="0" r="3" fill={q.color} opacity="0.12"/>
+              {/* Пыль */}
+              <circle cx="-7" cy="0" r="2" fill={q.color} opacity="0.07"/>
+            </g>
+
+            {/* Тултип — рендерим вне rotate, чтобы не крутился */}
+            {isHovered && (
+              <g transform={`translate(${tipX},${tipY})`} style={{ pointerEvents: "none" }}>
+                <rect x="0" y="0" width="82" height="38" rx="6"
+                  fill="rgba(10,8,4,0.92)" stroke={q.color} strokeWidth="0.8"/>
+                <text x="8" y="14" fontSize="9" fill={q.color} fontFamily="sans-serif" fontWeight="700">🏍 {q.name}</text>
+                <text x="8" y="27" fontSize="8" fill="rgba(255,255,255,0.7)" fontFamily="sans-serif">{q.tour}</text>
+              </g>
+            )}
           </g>
         );
       })}
