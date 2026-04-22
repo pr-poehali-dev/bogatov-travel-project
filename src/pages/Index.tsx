@@ -820,7 +820,7 @@ export default function Index() {
           </div>
 
           <div className="mt-20 flex justify-center gap-14 text-center">
-            {[["300+", "Клиентов"], ["5 лет", "Опыта"], ["98%", "Довольны"]].map(([n, l]) => (
+            {[["300+", "Клиентов"], ["3 года", "Опыта"], ["98%", "Довольны"]].map(([n, l]) => (
               <div key={l}>
                 <div className="font-cormorant text-3xl" style={goldText}>{n}</div>
                 <div className="font-montserrat text-xs uppercase tracking-widest mt-1" style={{ color: "#666" }}>{l}</div>
