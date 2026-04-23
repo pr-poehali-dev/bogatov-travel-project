@@ -32,33 +32,33 @@ const MERCH_ITEMS = [
   {
     id: "baseball",
     title: "Бейсболка",
-    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/fa8a539f-73c2-4cfb-bb23-e0c161109a38.jpg",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/d905f8b7-5f8f-4c99-a220-57b532694a31.jpeg",
     variants: [
-      { label: "Чёрная / золотая вышивка", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/fa8a539f-73c2-4cfb-bb23-e0c161109a38.jpg" },
+      { label: "Чёрная / золотая вышивка", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/d905f8b7-5f8f-4c99-a220-57b532694a31.jpeg" },
     ],
   },
   {
     id: "pants",
     title: "Штаны",
-    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/31e8685d-cd45-40ac-80eb-940cd06a2d01.jpg",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/9c54617c-e5a6-4e95-acf1-b81400320ae6.jpeg",
     variants: [
-      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/31e8685d-cd45-40ac-80eb-940cd06a2d01.jpg" },
+      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/9c54617c-e5a6-4e95-acf1-b81400320ae6.jpeg" },
     ],
   },
   {
     id: "shorts",
     title: "Шорты",
-    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/bd08e58e-1bb4-4f40-8082-b9194eaa3a28.jpg",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/fca95d1e-7d02-4373-b3aa-90fc27fd76f7.jpeg",
     variants: [
-      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/bd08e58e-1bb4-4f40-8082-b9194eaa3a28.jpg" },
+      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/fca95d1e-7d02-4373-b3aa-90fc27fd76f7.jpeg" },
     ],
   },
   {
     id: "tshirt",
     title: "Футболка",
-    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/51b9c747-5eff-4c39-bcb9-58f9c3d6e6ce.jpg",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/a39794ba-f83f-4d28-9ccc-322321fd2747.jpeg",
     variants: [
-      { label: "Чёрная / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/51b9c747-5eff-4c39-bcb9-58f9c3d6e6ce.jpg" },
+      { label: "Чёрная / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/a39794ba-f83f-4d28-9ccc-322321fd2747.jpeg" },
     ],
   },
 ];
