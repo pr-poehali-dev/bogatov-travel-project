@@ -36,6 +36,8 @@ const MERCH_ITEMS = [
     cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/d905f8b7-5f8f-4c99-a220-57b532694a31.jpeg",
     variants: [
       { label: "Чёрная / золотая вышивка", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/d905f8b7-5f8f-4c99-a220-57b532694a31.jpeg" },
+      { label: "Чёрная / бирюзовый лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/5df95f2a-b7c6-4007-90c8-40481b932cd5.jpeg" },
+      { label: "Бежевая / тёмный лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/bf2fd8f1-7810-4376-b49f-12b379ac55ad.jpeg" },
     ],
   },
   {
@@ -44,6 +46,8 @@ const MERCH_ITEMS = [
     cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/9c54617c-e5a6-4e95-acf1-b81400320ae6.jpeg",
     variants: [
       { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/9c54617c-e5a6-4e95-acf1-b81400320ae6.jpeg" },
+      { label: "Хаки / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/212f25ae-d527-416d-a425-1e0a9e80bb0b.jpeg" },
+      { label: "Чёрные / бирюзовый лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/05031638-86db-4036-a271-70357e8e7389.jpeg" },
     ],
   },
   {
@@ -52,6 +56,7 @@ const MERCH_ITEMS = [
     cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/fca95d1e-7d02-4373-b3aa-90fc27fd76f7.jpeg",
     variants: [
       { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/fca95d1e-7d02-4373-b3aa-90fc27fd76f7.jpeg" },
+      { label: "Чёрные / бирюзовый лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/b5266494-c79d-48b5-85f4-42c02327729c.jpeg" },
     ],
   },
   {
@@ -1932,11 +1937,12 @@ export default function Index() {
             </div>
 
             <div className="overflow-y-auto">
-              <div className="aspect-video overflow-hidden">
+              <div className="flex items-center justify-center" style={{ background: "#0a0a0a", minHeight: 340, maxHeight: 500 }}>
                 <img
                   src={activeMerch.variants[activeMerchVariant].img}
                   alt={activeMerch.title}
-                  className="w-full h-full object-cover transition-all duration-500"
+                  className="transition-all duration-500"
+                  style={{ maxHeight: 500, maxWidth: "100%", width: "auto", objectFit: "contain" }}
                 />
               </div>
 
