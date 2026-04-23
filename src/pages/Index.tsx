@@ -15,7 +15,52 @@ const NAV_ITEMS = [
   { label: "Отзывы", href: "#reviews" },
   { label: "Карта", href: "#roadmap" },
   { label: "Elite Club", href: "#club" },
+  { label: "Мерч", href: "#merch" },
   { label: "Контакты", href: "#booking" },
+];
+
+const MERCH_ITEMS = [
+  {
+    id: "hoodie",
+    title: "Худи",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/482caf73-68e0-41c8-bb0d-6e34e1d06a6b.jpeg",
+    variants: [
+      { label: "Чёрное / золотой лого — фронт", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/482caf73-68e0-41c8-bb0d-6e34e1d06a6b.jpeg" },
+      { label: "Чёрное / золотой лого — спина", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/d88336e2-0618-4661-b368-6313a2901516.jpg" },
+    ],
+  },
+  {
+    id: "baseball",
+    title: "Бейсболка",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/fa8a539f-73c2-4cfb-bb23-e0c161109a38.jpg",
+    variants: [
+      { label: "Чёрная / золотая вышивка", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/fa8a539f-73c2-4cfb-bb23-e0c161109a38.jpg" },
+    ],
+  },
+  {
+    id: "pants",
+    title: "Штаны",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/31e8685d-cd45-40ac-80eb-940cd06a2d01.jpg",
+    variants: [
+      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/31e8685d-cd45-40ac-80eb-940cd06a2d01.jpg" },
+    ],
+  },
+  {
+    id: "shorts",
+    title: "Шорты",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/bd08e58e-1bb4-4f40-8082-b9194eaa3a28.jpg",
+    variants: [
+      { label: "Чёрные / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/bd08e58e-1bb4-4f40-8082-b9194eaa3a28.jpg" },
+    ],
+  },
+  {
+    id: "tshirt",
+    title: "Футболка",
+    cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/51b9c747-5eff-4c39-bcb9-58f9c3d6e6ce.jpg",
+    variants: [
+      { label: "Чёрная / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/51b9c747-5eff-4c39-bcb9-58f9c3d6e6ce.jpg" },
+    ],
+  },
 ];
 
 const BENEFITS = [
@@ -596,6 +641,8 @@ export default function Index() {
   const [agreed, setAgreed] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showConsent, setShowConsent] = useState(false);
+  const [activeMerch, setActiveMerch] = useState<null | typeof MERCH_ITEMS[0]>(null);
+  const [activeMerchVariant, setActiveMerchVariant] = useState(0);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -1815,6 +1862,116 @@ export default function Index() {
             </div>
             <div className="px-8 py-5 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
               <button onClick={() => { setShowConsent(false); setAgreed(true); }} className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300" style={{ background: "#d79a57", color: "#160f07" }}>Согласен(а)</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MERCH */}
+      <section id="merch" className="py-24 px-6" style={{ background: "#0a0a0a" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="font-montserrat text-xs uppercase tracking-[0.3em] mb-4" style={{ color: "#d79a57" }}>Эксклюзивная коллекция</p>
+            <h2 className="font-cormorant text-5xl md:text-6xl font-light text-white mb-4">Мерч</h2>
+            <p className="font-montserrat text-sm" style={{ color: "#666" }}>Скоро в продаже</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {MERCH_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => { setActiveMerch(item); setActiveMerchVariant(0); }}
+                className="group relative overflow-hidden rounded-2xl text-left transition-all duration-500"
+                style={{ border: "1px solid rgba(215,154,87,0.15)", background: "#111" }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.5)")}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(215,154,87,0.15)")}
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={item.cover}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4 flex items-center justify-between">
+                  <span className="font-cormorant text-xl text-white">{item.title}</span>
+                  <span className="font-montserrat text-[10px] uppercase tracking-widest px-2 py-1 rounded-full" style={{ background: "rgba(215,154,87,0.15)", color: "#d79a57" }}>Скоро</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* МОДАЛЬНОЕ ОКНО — Мерч */}
+      {activeMerch && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.92)" }}
+          onClick={() => setActiveMerch(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col"
+            style={{ background: "#0d0d0d", border: "1px solid rgba(215,154,87,0.25)", maxHeight: "90vh" }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-8 py-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+              <div>
+                <h2 className="font-cormorant text-3xl text-white">{activeMerch.title}</h2>
+                <p className="font-montserrat text-xs uppercase tracking-widest mt-1" style={{ color: "#d79a57" }}>Скоро в продаже</p>
+              </div>
+              <button
+                onClick={() => setActiveMerch(null)}
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                style={{ border: "1px solid rgba(255,255,255,0.1)", color: "#888" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(215,154,87,0.4)"; e.currentTarget.style.color = "#d79a57"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#888"; }}
+              >
+                <Icon name="X" size={16} />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto">
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={activeMerch.variants[activeMerchVariant].img}
+                  alt={activeMerch.title}
+                  className="w-full h-full object-cover transition-all duration-500"
+                />
+              </div>
+
+              {activeMerch.variants.length > 1 && (
+                <div className="px-8 py-4 flex gap-3 flex-wrap" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+                  {activeMerch.variants.map((v, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveMerchVariant(i)}
+                      className="font-montserrat text-xs px-4 py-2 rounded-full transition-all duration-200"
+                      style={{
+                        background: i === activeMerchVariant ? "#d79a57" : "rgba(255,255,255,0.05)",
+                        color: i === activeMerchVariant ? "#160f07" : "#aaa",
+                        border: i === activeMerchVariant ? "none" : "1px solid rgba(255,255,255,0.1)",
+                      }}
+                    >
+                      {v.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="px-8 py-5">
+                <p className="font-montserrat text-sm leading-relaxed" style={{ color: "#666" }}>
+                  Эксклюзивная коллекция BOGATOV TRAVEL. Следите за обновлениями — скоро открываем продажи.
+                </p>
+              </div>
+            </div>
+
+            <div className="px-8 py-5 flex-shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              <button
+                className="w-full py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest"
+                style={{ background: "rgba(215,154,87,0.12)", color: "#d79a57", border: "1px solid rgba(215,154,87,0.3)", cursor: "default" }}
+              >
+                Скоро в продаже
+              </button>
             </div>
           </div>
         </div>
