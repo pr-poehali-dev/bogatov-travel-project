@@ -837,16 +837,21 @@ export default function Index() {
         <div className="relative z-10 text-center max-w-5xl mx-auto px-6 pt-28">
           <div className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full" style={{ border: "1px solid rgba(215,154,87,0.3)", background: "rgba(215,154,87,0.04)" }}>
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#d79a57" }} />
-            <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Премиальные квадротуры</span>
+            <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#d79a57" }}>Ближайший тур — 17 мая 2025</span>
           </div>
 
           <h1 className="font-cormorant leading-none mb-4" style={{ fontSize: "clamp(60px,10vw,110px)" }}>
             <span className="block" style={goldText}>БОГАТОВ</span>
           </h1>
 
-          <p className="font-montserrat max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "#e8ddc9", fontSize: "clamp(15px,1.8vw,19px)" }}>
+          <p className="font-montserrat max-w-2xl mx-auto mb-5 leading-relaxed" style={{ color: "#e8ddc9", fontSize: "clamp(15px,1.8vw,19px)" }}>
             Квадротуры, приключения и активный отдых. Эмоции, стиль и мощный драйв в каждой поездке.
           </p>
+
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full" style={{ background: "rgba(200,50,50,0.15)", border: "1px solid rgba(200,50,50,0.35)" }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#e05a5a" }} />
+            <span className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#e07a7a" }}>Осталось 4 места из 10</span>
+          </div>
 
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col sm:flex-row gap-3">
@@ -2005,6 +2010,20 @@ export default function Index() {
           <div className="font-montserrat text-xs uppercase tracking-widest" style={{ color: "#444" }}>© 2026 БОГАТОВ</div>
         </div>
       </footer>
+
+      {/* ПРИЛИПШАЯ КНОПКА TELEGRAM — мобиле */}
+      <a
+        href={TG_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-5 py-3 rounded-full font-montserrat text-xs font-semibold uppercase tracking-widest transition-all duration-300 md:hidden"
+        style={{ background: "#229ED9", color: "#fff", boxShadow: "0 4px 24px rgba(34,158,217,0.45)" }}
+        onTouchStart={e => { e.currentTarget.style.transform = "scale(0.96)"; }}
+        onTouchEnd={e => { e.currentTarget.style.transform = "scale(1)"; }}
+      >
+        <Icon name="Send" size={15} />
+        Telegram
+      </a>
     </div>
   );
 }
