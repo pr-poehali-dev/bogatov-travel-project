@@ -25,8 +25,9 @@ const MERCH_ITEMS = [
     title: "Худи",
     cover: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/482caf73-68e0-41c8-bb0d-6e34e1d06a6b.jpeg",
     variants: [
-      { label: "Чёрное / золотой лого — фронт", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/482caf73-68e0-41c8-bb0d-6e34e1d06a6b.jpeg" },
-      { label: "Чёрное / золотой лого — спина", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/files/d88336e2-0618-4661-b368-6313a2901516.jpg" },
+      { label: "Чёрное / золотой лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/482caf73-68e0-41c8-bb0d-6e34e1d06a6b.jpeg" },
+      { label: "Бежевое / тёмный лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/46558c5a-52ba-443f-bfd7-2c6605e0f566.jpeg" },
+      { label: "Чёрное / бирюзовый лого", img: "https://cdn.poehali.dev/projects/2eb621eb-507b-49ef-8fd5-40538caa0018/bucket/a9d7a8c7-f6f5-4276-b456-faa45461584b.jpeg" },
     ],
   },
   {
